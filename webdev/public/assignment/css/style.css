@@ -3,5 +3,20 @@ input.form-control {
 }
 
 body {
-    padding-top: 36px;
+    padding-top: 70px;
+}
+
+.mobileNav {
+    position: absolute;
+    right: 5%;
+}
+
+.background_blue
+{
+    background-color: dodgerblue;
+}
+
+.textcolor-white
+{
+    color:white;
 }
