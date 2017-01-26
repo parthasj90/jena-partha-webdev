@@ -4,35 +4,22 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="css/style.css" rel="stylesheet"/>
+    <link href="../css/style.css" rel="stylesheet"/>
 </head>
 <body>
 
-<nav class="navbar navbar-default navbar-fixed-top background_blue">
-    <div class="container">
-        <p class="navbar-text pull-left">
-            <a href="./profile.html" class="navbar-link">
-          <span class="glyphicon glyphicon-chevron-left textcolor-white">
-          </span>
-            </a>
-        </p>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-text pull-right">
+            <span class="glyphicon glyphicon-ok"></span>
+        </div>
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">
-                <span class="textcolor-white">Websites</span>
-            </a>
-            <p class="navbar-text mobileNav pull-right">
-                <a href="./website-new.html" class="navbar-link">
-          <span class="glyphicon glyphicon-plus textcolor-white">
-          </span>
-                </a>
-            </p>
+            <a class="navbar-brand" href="#">Profile</a>
         </div>
     </div>
 </nav>
 
     <div class="container">
-
-
         <form>
             <div class="form-group">
                 <label for="username">Username</label>
@@ -53,19 +40,16 @@
         </form>
 
         <a class="btn btn-primary btn-block"
-           href="website-list.html">Websites</a>
+           href="../website/website-list.html">Websites</a>
         <a class="btn btn-danger  btn-block"
            href="login.html">Logout</a>
     </div>
 
-<nav class="navbar navbar-default navbar-fixed-bottom background_blue">
-    <div class="container">
-        <div class="row navbar-text pull-right">
-            <div class="col-xs-12">
-                <a href="#">
-                    <span class="glyphicon glyphicon-user  textcolor-white"></span>
-                </a>
-            </div>
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-text pull-right">
+            <a href="../user/profile.html">
+                <span class="glyphicon glyphicon-user"></span></a>
         </div>
     </div>
 </nav>

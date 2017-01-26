@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../css/style.css" rel="stylesheet"/>
+</head>
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="row container-fluid">
+        <div class="col-sm-4 hidden-xs">
+            <div class="navbar-text pull-left">
+                <a href="website-list.html">
+                    <span class="glyphicon glyphicon-chevron-left"></span></a>
+            </div>
+            <div class="navbar-text pull-right">
+                <a href="website-new.html">
+                    <span class="glyphicon glyphicon-plus"></span></a>
+            </div>
+            <div class="navbar-header">
+                <a class="navbar-brand" href="website-list.html">Websites</a>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-8 pull-right">
+            </div>
+            <div class="navbar-text pull-right">
+                <a href="website-list.html">
+                    <span class="glyphicon glyphicon-ok"></span></a>
+            </div>
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Edit website</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<div class="row container-fluid">
+    <div class="col-sm-4 hidden-xs"
+         style="overflow-y: scroll;top: 0px;bottom: 0px;position: absolute;left: 0px;margin-top: 50px;padding-top: 15px;margin-bottom: 50px;">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <a href="../page/page-list.html">
+                    Cras justo odio
+                </a>
+                <a href="website-edit.html">
+                    <span class="glyphicon glyphicon-cog pull-right"></span>
+                </a>
+            </li>
+            <li class="list-group-item">
+                <a href="../page/page-list.html">
+                    Dapibus ac facilisis in
+                </a>
+                <a href="#">
+                    <span class="glyphicon glyphicon-cog pull-right"></span>
+                </a>
+            </li>
+            <li class="list-group-item">
+                <a href="../page/page-list.html">
+                    Morbi leo risus
+                </a>
+                <a href="#">
+                    <span class="glyphicon glyphicon-cog pull-right"></span>
+                </a>
+            </li>
+            <li class="list-group-item">
+                <a href="../page/page-list.html">
+                    Porta ac consectetur ac
+                </a>
+                <a href="#">
+                    <span class="glyphicon glyphicon-cog pull-right"></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-xs-12 col-sm-8 pull-right">
+        <form>
+            <div class="form-group">
+                <label for="name">Website Name</label>
+                <input type="input" class="form-control" id="name" placeholder="Name">
+            </div>
+            <div class="form-group">
+                <label for="description">Website Description</label>
+                <textarea class="form-control" id="description" placeholder="Description"></textarea>
+            </div>
+        </form>
+        <a class="btn btn-danger  btn-block"
+           href="website-list.html">Delete</a>
+    </div>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-text pull-right">
+            <a href="../user/profile.html">
+                <span class="glyphicon glyphicon-user"></span></a>
+        </div>
+    </div>
+</nav>
+
+</body>
+</html>
