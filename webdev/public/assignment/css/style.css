@@ -7,19 +7,19 @@ body {
     padding-bottom: 60px;
 }
 
-.navbar-default{
+.navbar-default {
     background-color: cornflowerblue;
 }
 
-.navbar .navbar-brand{
+.navbar .navbar-brand {
     color: white;
 }
 
-.navbar .navbar-text{
+.navbar .navbar-text {
     color: white;
 }
 
-.jga-toolbar {
+.psj-toolbar {
     position: absolute;
     right: 15px;
     background-color: white;
@@ -27,4 +27,24 @@ body {
     padding-bottom: 5px;
     border-bottom-left-radius: 5px;
     opacity: 0.7;
+}
+
+.border {
+    border-style: solid;
+    border-width: 0px;
+    border-right-width: 1px;
+    border-color: darkgray;
+    overflow-y: visible;
+    top: 0px;
+    bottom: 0px;
+    position: absolute;
+    left: 0px;
+    margin-top: 50px;
+    padding-top: 15px;
+    margin-bottom: 50px;
+"
+}
+
+.list-group-item {
+    border: none;
 }
