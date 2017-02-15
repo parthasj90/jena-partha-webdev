@@ -50,6 +50,7 @@
         vm.widget = widget;
         function updateWidget(newWidget) {
             var widget = WidgetService.updateWidget(widgetId, newWidget);
+            console.log(widget);
             if(widget != null) {
                 $location.url('/user/' + userId + "/website/" + websiteId + "/page/" + pageId + "/widget");
             } else {
@@ -58,7 +59,7 @@
         }
         function deleteWidget() {
             WidgetService.deleteWidget(widgetId);
-            location.url('/user/' + userId + "/website/" + websiteId + "/page/" + pageId + "/widget");
+            $location.url('/user/' + userId + "/website/" + websiteId + "/page/" + pageId + "/widget");
         }
     }
 })();
@@ -85,9 +86,9 @@
 
         var widget = WidgetService.findWidgetById(widgetId);
         vm.widget = widget;
-        function createWidget(newWidget) {
-            WidgetService.createWidget(pageId,newWidget);
-            location.url('/user/' + userId + "/website/" + websiteId + "/page/" + pageId + "/widget");
+        function createWidget(type) {
+            var w = WidgetService.createWidget(pageId,type);
+            $location.url('/user/' + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/" + w._id);
 
         }
     }

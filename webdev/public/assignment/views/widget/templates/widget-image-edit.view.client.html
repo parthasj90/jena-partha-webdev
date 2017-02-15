@@ -3,19 +3,19 @@
     <form>
         <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" placeholder="name">
+            <input ng-model="model.widget.name" type="text" class="form-control" id="name" placeholder="name">
         </div>
         <div class="form-group">
             <label for="text">Text</label>
-            <input type="text" class="form-control" id="text" placeholder="place any text">
+            <input ng-model="model.widget.text" type="text" class="form-control" id="text" placeholder="place any text">
         </div>
         <div class="form-group">
             <label for="url">URL</label>
-            <input type="url" class="form-control" id="url" placeholder="enter any url">
+            <input ng-model="model.widget.url"type="url" class="form-control" id="url" placeholder="enter any url">
         </div>
         <div class="form-group">
             <label for="width">Width</label>
-            <input type="number" class="form-control" id="width" placeholder="place any number">
+            <input ng-model="model.widget.width" type="text" class="form-control" id="width" placeholder="place any number">
         </div>
         <div class="form-group">
             <label for="upload">Upload</label>
