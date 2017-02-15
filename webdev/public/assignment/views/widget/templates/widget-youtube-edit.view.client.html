@@ -1,4 +1,3 @@
-
 <div>
     <form>
         <div class="form-group">
@@ -11,12 +10,14 @@
         </div>
         <div class="form-group">
             <label for="url">URL</label>
-            <input ng-model="model.widget.url"type="url" class="form-control" id="url" placeholder="enter any url">
+            <input ng-model="model.widget.url" type="url" class="form-control" id="url" placeholder="enter any url">
         </div>
         <div class="form-group">
             <label for="width">Width</label>
-            <input ng-model="model.widget.width" type="text" class="form-control" id="width" placeholder="place any number">
+            <input ng-model="model.widget.width" type="text" class="form-control" id="width"
+                   placeholder="place any number">
         </div>
     </form>
+    <a ng-click="model.deleteWidget()" class="btn btn-danger btn-block">Delete</a>
 </div>
 

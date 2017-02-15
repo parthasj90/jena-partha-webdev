@@ -1,4 +1,3 @@
-
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="row container-fluid">
         <div class="col-sm-4 hidden-xs">
@@ -48,11 +47,14 @@
             <form>
                 <div class="form-group">
                     <label for="name">Website Name</label>
-                    <input ng-model="website.name" type="input" class="form-control" id="name" placeholder="Name" ng-init="website.name=model.website.name">
+                    <input ng-model="website.name" type="input" class="form-control" id="name" placeholder="Name"
+                           ng-init="website.name=model.website.name">
                 </div>
                 <div class="form-group">
                     <label for="description">Website Description</label>
-                    <textarea ng-model="website.description" class="form-control" rows="3" id="description" placeholder="Description" ng-init="website.description=model.website.description"></textarea>
+                    <textarea ng-model="website.description" class="form-control" rows="3" id="description"
+                              placeholder="Description"
+                              ng-init="website.description=model.website.description"></textarea>
                 </div>
             </form>
             <a ng-click="model.deleteWebsite()" class="btn btn-danger  btn-block">Delete</a>

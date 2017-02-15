@@ -1,4 +1,4 @@
-(function(){
+(function () {
     angular
         .module("WebAppMaker")
         .controller("loginController", loginController);
@@ -9,7 +9,7 @@
 
         function login(user) {
             var loginUser = UserService.findUserByCredentials(user.username, user.password);
-            if(loginUser != null) {
+            if (loginUser != null) {
                 $location.url('/user/' + loginUser._id);
             } else {
                 vm.error = 'user not found';

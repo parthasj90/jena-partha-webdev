@@ -1,19 +1,20 @@
 <nav class="navbar navbar-default navbar-fixed-top">
-<div class="container-fluid">
-    <div class="navbar-text pull-left">
-        <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-        </a>
+    <div class="container-fluid">
+        <div class="navbar-text pull-left">
+            <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+        </div>
+        <div class="navbar-text pull-right">
+            <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/new">
+                <span class="glyphicon glyphicon-plus"></span>
+            </a>
+        </div>
+        <div class="navbar-header">
+            <a class="navbar-brand"
+               href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget">Widgets</a>
+        </div>
     </div>
-    <div class="navbar-text pull-right">
-        <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/new">
-            <span class="glyphicon glyphicon-plus"></span>
-        </a>
-    </div>
-    <div class="navbar-header">
-        <a class="navbar-brand" href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget">Widgets</a>
-    </div>
-</div>
 </nav>
 <div class="container-fluid">
     <div ng-repeat="widget in model.widgets">
@@ -36,7 +37,8 @@
                 <img ng-src="{{widget.url}}" width="{{widget.width}}"/>
             </div>
             <div ng-switch-when="YOUTUBE">
-                <iframe width="100%" ng-src="{{model.doYouTrustUrl(widget.url)}}" frameborder="0" allowfullscreen></iframe>
+                <iframe width="100%" ng-src="{{model.doYouTrustUrl(widget.url)}}" frameborder="0"
+                        allowfullscreen></iframe>
             </div>
         </div>
     </div>
