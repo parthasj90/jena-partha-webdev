@@ -1,0 +1,38 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-text pull-left">
+            <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget">
+                <span class="glyphicon glyphicon-chevron-left"></span></a>
+        </div>
+        <div ng-click="model.updateWidget(widget)" class="navbar-text pull-right">
+            <a>
+                <span class="glyphicon glyphicon-ok"></span></a>
+        </div>
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Widget Edit</a>
+        </div>
+    </div>
+</nav>
+<div class="container-fluid">
+<div ng-switch="model.widget.widgetType">
+    <div ng-switch-when="HEADING">
+        <ng-include src="'views/widget/templates/widget-heading-edit.view.client.html'">
+    </div>
+    <div ng-switch-when="IMAGE">
+        <ng-include src="'views/widget/templates/widget-image-edit.view.client.html'">
+    </div>
+    <div ng-switch-when="YOUTUBE">
+        <ng-include src="'views/widget/templates/widget-youtube-edit.view.client.html'">
+    </div>
+    <a ng-click="model.deleteWidget()" class="btn btn-danger  btn-block">Delete</a>
+</div>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <div class="navbar-text pull-right">
+            <a href="#/user/{{model.userId}}">
+                <span class="glyphicon glyphicon-user"></span></a>
+        </div>
+    </div>
+</nav>
