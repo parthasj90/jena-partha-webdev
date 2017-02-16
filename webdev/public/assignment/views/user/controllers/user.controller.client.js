@@ -66,10 +66,8 @@
         init();
 
         function register(user) {
-            console.log(user);
             if (user.password == user.password2) {
                 var registerUser = UserService.createUser(user);
-                console.log(registerUser);
                 if (registerUser != null) {
                     $location.url('/user/' + registerUser._id);
                 } else {

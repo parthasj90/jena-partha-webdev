@@ -59,7 +59,6 @@
         init();
         function updateWidget(newWidget) {
             var widget = WidgetService.updateWidget(widgetId, newWidget);
-            console.log(widget);
             if (widget != null) {
                 $location.url('/user/' + userId + "/website/" + websiteId + "/page/" + pageId + "/widget");
             } else {
