@@ -97,7 +97,9 @@
 
         init();
         function createWidget(type) {
-            var w = WidgetService.createWidget(pageId, type);
+            var newWidget = {};
+            newWidget.widgetType = type;
+            var w = WidgetService.createWidget(pageId, newWidget);
             $location.url('/user/' + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/" + w._id);
 
         }

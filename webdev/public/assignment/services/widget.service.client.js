@@ -43,10 +43,9 @@
             }
         }
 
-        function createWidget(pageId, type) {
-            // widget.pageId = pageId;
-            // widget._id = (new Date()).getTime();
-            var widget = {"_id": (new Date()).getTime(), "widgetType": type, "pageId": pageId, "size": 0, "text": ""};
+        function createWidget(pageId, widget) {
+            widget.pageId = pageId;
+            widget._id = (new Date()).getTime();
             widgets.push(widget);
             return widget;
         }
