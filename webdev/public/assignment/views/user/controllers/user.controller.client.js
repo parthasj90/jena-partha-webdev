@@ -11,12 +11,13 @@
         }
         init();
         function login(user) {
-            var loginUser = UserService.findUserByCredentials(user.username, user.password);
-            if (loginUser != null) {
-                $location.url('/user/' + loginUser._id);
+            var promise = UserService.findUserByCredentials(user.username, user.password);
+            promise.success(function(user){
+            if (user) {
+                $location.url('/user/' + user._id);
             } else {
                 vm.error = 'user not found';
-            }
+            }});
         }
     }
 })();
@@ -33,21 +34,26 @@
         // vm.deleteUser = deleteUsers;
 
         var userId = $routeParams['uid'];
-
         function init() {
-            var user = UserService.findUserById(userId);
-            vm.user = user;
+            var promise = UserService.findUserById(userId);
+            promise.success(function(user){
+                console.log(user);
+                vm.user = user});
+            console.log(vm.user);
         }
 
         init();
 
         function updateUser(newUser) {
-            var user = UserService.updateUser(userId, newUser);
-            if (user != null) {
-                $location.url('/user/' + user._id);
-            } else {
-                vm.error = "Unable to update user";
-            }
+            UserService
+                .updateUser(userId, newUser)
+                .success(function (user) {
+                    if (user != null) {
+                        $location.url('/user/' + user._id);
+                    } else {
+                        vm.error = "Unable to update user";
+                    }
+                });
         }
     }
 })();
@@ -67,12 +73,15 @@
 
         function register(user) {
             if (user.password == user.password2) {
-                var registerUser = UserService.createUser(user);
-                if (registerUser != null) {
-                    $location.url('/user/' + registerUser._id);
-                } else {
-                    vm.error = 'unable to redirect to user profile';
-                }
+                UserService
+                    .createUser(user)
+                    .success(function (registerUser) {
+                        if (registerUser != null) {
+                            $location.url('/user/' + registerUser._id);
+                        } else {
+                            vm.error = 'unable to redirect to user profile';
+                        }
+                });
             }
             else {
                 vm.error = 'passwords do not match';

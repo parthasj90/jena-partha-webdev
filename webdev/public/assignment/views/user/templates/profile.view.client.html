@@ -1,6 +1,6 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
-        <div ng-click="model.updateUser(user)" class="navbar-text pull-right">
+        <div ng-click="model.updateUser(model.user)" class="navbar-text pull-right">
             <a>
                 <span class="glyphicon glyphicon-ok"></span></a>
         </div>
@@ -9,28 +9,23 @@
         </div>
     </div>
 </nav>
-
 <div class="container-fluid">
     <form>
         <div class="form-group">
             <label for="username">Username</label>
-            <input ng-model="user.username" type="text" class="form-control" id="username"
-                   ng-init="user.username=model.user.username">
+            <input ng-model="model.user.username" type="text" class="form-control" id="username">
         </div>
         <div class="form-group">
             <label for="email">Email address</label>
-            <input ng-model="user.email" type="email" class="form-control" id="email" placeholder="alice@wonderland.com"
-                   ng-init="user.email=model.user.email">
+            <input ng-model="model.user.email" type="email" class="form-control" id="email" placeholder="alice@wonderland.com">
         </div>
         <div class="form-group">
             <label for="first-name">First Name</label>
-            <input ng-model="user.firstName" type="text" class="form-control" id="first-name" placeholder="Alice"
-                   ng-init="user.firstName=model.user.firstName">
+            <input ng-model="model.user.firstName" type="text" class="form-control" id="first-name" placeholder="Alice">
         </div>
         <div class="form-group">
             <label for="last-name">Last Name</label>
-            <input ng-model="user.lastName" type="text" class="form-control" id="last-name" placeholder="Wonderland"
-                   ng-init="user.lastName=model.user.lastName">
+            <input ng-model="model.user.lastName" type="text" class="form-control" id="last-name" placeholder="Wonderland">
         </div>
     </form>
 
