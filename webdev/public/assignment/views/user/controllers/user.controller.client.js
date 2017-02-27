@@ -37,9 +37,7 @@
         function init() {
             var promise = UserService.findUserById(userId);
             promise.success(function(user){
-                console.log(user);
                 vm.user = user});
-            console.log(vm.user);
         }
 
         init();

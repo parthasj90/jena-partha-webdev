@@ -15,7 +15,6 @@ module.exports = function (app) {
     function updateUser(req, res) {
         var userId = req.params.userId;
         var newUser = req.body;
-        console.log(newUser);
         for(var u in users) {
             if( users[u]._id == userId ) {
                 users[u].firstName = newUser.firstName;
@@ -45,11 +44,9 @@ module.exports = function (app) {
 
     function findUserById(req, res) {
         var userId = req.params.userId;
-        console.log("find user by ID HTTP service");
         var user = users.find(function (u) {
             return u._id == userId;
         });
-        console.log(user);
         res.json(user);
     }
 
@@ -67,7 +64,6 @@ module.exports = function (app) {
         var user = users.find(function (u) {
             return u.username == req.query.username;
         });
-        console.log(user);
         if(user) {
             res.json(user);
         } else {
@@ -78,11 +74,9 @@ module.exports = function (app) {
     function findUserByCredentials(req, res){
         var username = req.query.username;
         var password = req.query.password;
-        console.log("find user by credentials HTTP service");
         var user = users.find(function(user){
             return user.password == password && user.username == username;
         });
-        console.log(user);
         res.json(user);
     }
 }

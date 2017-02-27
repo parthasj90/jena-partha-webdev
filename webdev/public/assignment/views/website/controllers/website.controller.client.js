@@ -9,8 +9,11 @@
 
         function init() {
             vm.userId = userId;
-            var websites = WebsiteService.findWebsitesByUser(userId);
-            vm.websites = websites;
+            WebsiteService
+                .findWebsitesByUser(userId)
+                .success(function (websites) {
+                    vm.websites = websites;
+                });
         }
 
         init();
@@ -34,25 +37,39 @@
         function init() {
             vm.userId = userId;
             vm.websiteId = websiteId;
-            var websites = WebsiteService.findWebsitesByUser(userId);
-            vm.websites = websites;
-            var website = WebsiteService.findWebsiteById(websiteId);
-            vm.website = website;
+            WebsiteService
+                .findWebsitesByUser(userId)
+                .success(function (websites) {
+                    vm.websites = websites;
+                });
+            WebsiteService
+                .findWebsiteById(websiteId)
+                .success(function (website) {
+                    vm.website = website;
+                });
         }
 
         init();
         function updateWebsite(newWebsite) {
-            var site = WebsiteService.updateWebsite(websiteId, newWebsite);
-            if (site != null) {
-                $location.url('/user/' + userId + "/website");
-            } else {
-                vm.error = "Unable to update website";
-            }
+            WebsiteService
+                .updateWebsite(websiteId, newWebsite)
+                .success(function (site) {
+                if (site != null) {
+                    $location.url('/user/' + userId + "/website");
+                } else {
+                    vm.error = "Unable to update website";
+                }
+            });
+
         }
 
         function deleteWebsite() {
-            WebsiteService.deleteWebsite(websiteId);
-            $location.url('/user/' + userId + "/website");
+            WebsiteService
+                .deleteWebsite(websiteId)
+                .success(function () {
+                $location.url('/user/' + userId + "/website");
+            });
+
         }
     }
 })();
@@ -70,14 +87,21 @@
         var userId = $routeParams.uid;
         function init() {
             vm.userId = userId;
-            var websites = WebsiteService.findWebsitesByUser(userId);
-            vm.websites = websites;
+            WebsiteService
+                .findWebsitesByUser(userId)
+                .success(function (websites) {
+                    vm.websites = websites;
+                });
         }
 
         init();
         function createWebsite(newWebsite) {
-            WebsiteService.createWebsite(userId, newWebsite);
-            $location.url('/user/' + userId + "/website");
+            WebsiteService
+                .createWebsite(userId, newWebsite)
+                .success(function () {
+                $location.url('/user/' + userId + "/website");
+            });
+
 
         }
     }

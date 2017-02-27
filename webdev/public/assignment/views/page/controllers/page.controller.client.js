@@ -11,8 +11,12 @@
         function init() {
             vm.websiteId = websiteId;
             vm.userId = userId;
-            var pages = PageService.findPageByWebsiteId(websiteId);
-            vm.pages = pages;
+            PageService
+                .findPageByWebsiteId(websiteId)
+                .success(function (pages) {
+                    vm.pages = pages;
+            });
+
         }
 
         init();
@@ -38,25 +42,40 @@
             vm.websiteId = websiteId;
             vm.userId = userId;
             vm.pageId = pageId;
-            var pages = PageService.findPageByWebsiteId(websiteId);
-            vm.pages = pages;
-            var page = PageService.findPageById(pageId);
-            vm.page = page;
+            PageService
+                .findPageByWebsiteId(websiteId)
+                .success(function (pages) {
+                    vm.pages = pages;
+                });
+            PageService
+                .findPageById(pageId)
+                .success(function (page) {
+                    vm.page = page;
+                });
+
         }
 
         init();
         function updatePage(newPage) {
-            var page = PageService.updatePage(pageId, newPage);
-            if (page != null) {
-                $location.url('/user/' + userId + "/website/" + websiteId + "/page");
-            } else {
-                vm.error = "Unable to update website";
-            }
+            PageService
+                .updatePage(pageId, newPage)
+                .success(function (page) {
+                    if (page != null) {
+                        $location.url('/user/' + userId + "/website/" + websiteId + "/page");
+                    } else {
+                        vm.error = "Unable to update website";
+                    }
+                });
+
         }
 
         function deletePage() {
-            PageService.deletePage(pageId);
-            $location.url('/user/' + userId + "/website/" + websiteId + "/page");
+            PageService
+                .deletePage(pageId)
+                .success(function () {
+                    $location.url('/user/' + userId + "/website/" + websiteId + "/page");
+                });
+
         }
     }
 })();
@@ -75,14 +94,21 @@
         function init() {
             vm.websiteId = websiteId;
             vm.userId = userId;
-            var pages = PageService.findPageByWebsiteId(websiteId);
-            vm.pages = pages;
+            PageService
+                .findPageByWebsiteId(websiteId)
+                .success(function (pages) {
+                    vm.pages = pages;
+                });
         }
 
         init();
         function createPage(newPage) {
-            PageService.createPage(websiteId, newPage);
-            $location.url('/user/' + userId + "/website/" + websiteId + "/page");
+            PageService
+                .createPage(websiteId, newPage)
+                .success(function () {
+                    $location.url('/user/' + userId + "/website/" + websiteId + "/page");
+                });
+
 
         }
     }
