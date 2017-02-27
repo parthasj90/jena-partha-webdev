@@ -6,13 +6,18 @@
     function sortableDir($http) {
         function linkFunc(scope, element, attributes) {
             element.sortable({
-                start: function( event, ui ) {},
-                stop: function( event, ui ) {},
+                update: function(){
+                    var order1 = element.sortable('toArray');
+                    console.log(order1);
+                    $http.put("/page/:pageId/widget?initial="+order1+"&final="+order1);
+            },
                 axis: 'y'
             });
             element.on( "sortstop", function( event, ui ) {
-                console.log(ui);
-                $http.put("/page/:pageId/widget?initial=index1&final=index2");
+
+                var order1 = element.sortable('toArray');
+                console.log(order1);
+                $http.put("/page/:pageId/widget?initial="+order1+"&final="+order1);
             } );
             element.on( "sortstart", function( event, ui ) {console.log(ui);} );
         }

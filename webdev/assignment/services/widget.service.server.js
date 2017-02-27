@@ -7,11 +7,9 @@ module.exports = function (app) {
     var multer = require('multer'); // npm install multer --save
     var upload = multer({ dest: __dirname+'/../../public/uploads' });
     app.post("/api/upload", upload.single('myFile'),uploadImage);
-    app.put("/page/:pageId/widget?initial=index1&final=index2",function (req,res) {
-        console.log("in sortable");
-    });
 
-    var widgets = [
+    var ids = ["123","234","345","567","678"];
+    var result = [
         {"_id": "123", "widgetType": "HEADING", "pageId": "321", "size": 2, "text": "GIZMODO"},
         {"_id": "234", "widgetType": "HEADING", "pageId": "321", "size": 4, "text": "Lorem ipsum"},
         {
@@ -22,8 +20,29 @@ module.exports = function (app) {
         {
             "_id": "678", "widgetType": "YOUTUBE", "pageId": "321", "width": "100%",
             "url": "https://youtu.be/AM2Ivdi9c4E"
-        }
-    ];
+        }];
+    var widgets = [];
+
+    ids.forEach(function(key) {
+        var found = false;
+        result = result.filter(function(item) {
+            if(!found && item._id == key) {
+                widgets.push(item);
+                found = true;
+                return false;
+            } else
+                return true;
+        })
+    })
+
+    app.put("/page/:pageId/widget",function (req,res) {
+        console.log("in sortable");
+        var initial = req.query.initial;
+        var final = req.query.final;
+        console.log(initial.split(","));
+        ids = initial.split(",");
+        console.log(ids);
+    });
 
     function uploadImage(req, res) {
         console.log("partha");
@@ -40,6 +59,23 @@ module.exports = function (app) {
     }
 
     function findAllWidgetsForPage(req, res) {
+        console.log("in all");
+        console.log(ids);
+        result = widgets;
+        widgets = [];
+        ids.forEach(function(key) {
+            var found = false;
+            result = result.filter(function(item) {
+                if(!found && item._id == key) {
+                    widgets.push(item);
+                    found = true;
+                    return false;
+                } else
+                    return true;
+            })
+        })
+        console.log(result);
+        console.log(widgets);
         var pId = req.params.pageId;
 
         var allwidgets = [];
