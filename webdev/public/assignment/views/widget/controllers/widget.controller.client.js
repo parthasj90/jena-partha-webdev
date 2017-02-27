@@ -14,8 +14,11 @@
             vm.websiteId = websiteId;
             vm.userId = userId;
             vm.pageId = pageId;
-            var widgets = WidgetService.findWidgetsByPageId(pageId);
-            vm.widgets = widgets;
+            WidgetService
+                .findWidgetsByPageId(pageId)
+                .success(function (widgets) {
+                    vm.widgets = widgets;
+                });
         }
 
         init();
@@ -50,25 +53,39 @@
             vm.userId = userId;
             vm.pageId = pageId;
             vm.widgetId = widgetId;
-            var widgets = WidgetService.findWidgetsByPageId(pageId);
-            vm.widgets = widgets;
-            var widget = WidgetService.findWidgetById(widgetId);
-            vm.widget = widget;
+            WidgetService
+                .findWidgetsByPageId(pageId)
+                .success(function (widgets) {
+                    vm.widgets = widgets;
+                });
+            WidgetService
+                .findWidgetById(widgetId)
+                .success(function (widget) {
+                    vm.widget = widget;
+                });
         }
 
         init();
         function updateWidget(newWidget) {
-            var widget = WidgetService.updateWidget(widgetId, newWidget);
-            if (widget != null) {
-                $location.url('/user/' + userId + "/website/" + websiteId + "/page/" + pageId + "/widget");
-            } else {
-                vm.error = "Unable to update website";
-            }
+            WidgetService
+                .updateWidget(widgetId, newWidget)
+                .success(function (widget) {
+                    if (widget != null) {
+                        $location.url('/user/' + userId + "/website/" + websiteId + "/page/" + pageId + "/widget");
+                    } else {
+                        vm.error = "Unable to update website";
+                    }
+                });
+
         }
 
         function deleteWidget() {
-            WidgetService.deleteWidget(widgetId);
-            $location.url('/user/' + userId + "/website/" + websiteId + "/page/" + pageId + "/widget");
+            WidgetService
+                .deleteWidget(widgetId)
+                .success(function () {
+                    $location.url('/user/' + userId + "/website/" + websiteId + "/page/" + pageId + "/widget");
+                });
+
         }
     }
 })();
@@ -90,17 +107,22 @@
             vm.userId = userId;
             vm.pageId = pageId;
             //vm.widgetId = widgetId;
-            var widgets = WidgetService.findWidgetsByPageId(pageId);
-            vm.widgets = widgets;
+            WidgetService
+                .findWidgetsByPageId(pageId)
+                .success(function (widgets) {
+                    vm.widgets = widgets;
+                });
         }
 
         init();
         function createWidget(type) {
             var newWidget = {};
             newWidget.widgetType = type;
-            var w = WidgetService.createWidget(pageId, newWidget);
-            $location.url('/user/' + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/" + w._id);
-
+            WidgetService
+                .createWidget(pageId, newWidget)
+                .success(function (w) {
+                    $location.url('/user/' + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/" + w._id);
+                });
         }
     }
 })();

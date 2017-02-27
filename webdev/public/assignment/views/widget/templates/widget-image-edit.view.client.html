@@ -17,11 +17,12 @@
             <label for="width">Width</label>
             <input ng-model="model.widget.width" type="text" class="form-control" id="width" placeholder="place any number">
         </div>
-        <div class="form-group">
-            <label for="upload">Upload</label>
-            <input type="file" class="form-control" id="upload" placeholder="choose file">
-        </div>
+        <form action="/api/upload"  method="post" enctype="multipart/form-data">
+            <input  name="myFile"   type="file" class="form-control"/>
+            <input  name="width"    value="{{model.widget.width}}" style="display: none"/>
+            <input  name="widgetId" value="{{model.widget._id}}"   style="display: none"/>
+            <button type="submit"   class="btn btn-block btn-primary">Upload Image</button>
+        </form>
     </form>
-    <a class="btn btn-primary  btn-block">Upload Image</a>
-
+    <a ng-click="model.deleteWidget()" class="btn btn-danger btn-block">Delete</a>
 </div>

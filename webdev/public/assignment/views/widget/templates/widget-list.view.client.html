@@ -17,6 +17,7 @@
     </div>
 </nav>
 <div class="container-fluid">
+    <div class="widget-list" wbdv-sortable="">
     <div ng-repeat="widget in model.widgets">
         <div ng-switch="widget.widgetType">
             <div class="psj-toolbar">
@@ -26,15 +27,16 @@
                 <span class="glyphicon glyphicon-align-justify"></span>
             </div>
             <div ng-switch-when="HEADING">
-                <ng-include src="'views/widget/templates/widget-heading.view.client.html'">
+                <ng-include src="'views/widget/templates/widget-heading.view.client.html'"></ng-include>
             </div>
             <div ng-switch-when="IMAGE">
-                <ng-include src="'views/widget/templates/widget-image.view.client.html'">
+                <ng-include src="'views/widget/templates/widget-image.view.client.html'"></ng-include>
             </div>
             <div ng-switch-when="YOUTUBE">
-                <ng-include src="'views/widget/templates/widget-youtube.view.client.html'">
+                <ng-include src="'views/widget/templates/widget-youtube.view.client.html'"></ng-include>
             </div>
         </div>
+    </div>
     </div>
 </div>
 
