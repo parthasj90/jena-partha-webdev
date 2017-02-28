@@ -18,7 +18,7 @@
 </nav>
 <div class="container-fluid">
     <div class="widget-list" wbdv-sortable="">
-    <div id={{widget._id}} ng-repeat="widget in model.widgets">
+    <div ng-repeat="widget in model.widgets">
         <div ng-switch="widget.widgetType">
             <div class="psj-toolbar">
                 <a href="#/user/{{model.userId}}/website/{{model.websiteId}}/page/{{model.pageId}}/widget/{{widget._id}}">
