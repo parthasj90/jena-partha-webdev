@@ -9,7 +9,8 @@ module.exports = function (app) {
     app.post("/api/upload", upload.single('myFile'),uploadImage);
     app.put("/page/:pageId/widget",sortable);
 
-    var widgets = [
+    var ids = ["123","234","345","567","678"];
+    var result = [
         {"_id": "123", "widgetType": "HEADING", "pageId": "321", "size": 2, "text": "GIZMODO"},
         {"_id": "234", "widgetType": "HEADING", "pageId": "321", "size": 4, "text": "Lorem ipsum"},
         {
@@ -21,12 +22,12 @@ module.exports = function (app) {
             "_id": "678", "widgetType": "YOUTUBE", "pageId": "321", "width": "100%",
             "url": "https://youtu.be/AM2Ivdi9c4E"
         }];
+    var widgets = result;
 
     function sortable(req,res){
         var initial = req.query.initial;
         var final = req.query.final;
-        var removed = widgets.splice(initial, 1);
-        widgets.splice(final,0,removed[0]);
+        ids = initial.split(",");
     }
 
     function uploadImage(req, res) {
@@ -42,6 +43,20 @@ module.exports = function (app) {
     }
 
     function findAllWidgetsForPage(req, res) {
+        result = widgets;
+        widgets = [];
+        ids.forEach(function(key) {
+            var found = false;
+            result = result.filter(function(item) {
+                if(!found && item._id == key) {
+                    widgets.push(item);
+                    found = true;
+                    return false;
+                } else
+                    return true;
+            })
+        })
+        result = widgets;
         var pId = req.params.pageId;
 
         var allwidgets = [];
@@ -67,6 +82,12 @@ module.exports = function (app) {
 
     function deleteWidget(req, res) {
         var wId = req.params.widgetId;
+        for(var id in ids){
+            if (ids[id] == wId){
+                ids.splice(id,1);
+                break;
+            }
+        }
         for(var w in widgets) {
             if( widgets[w]._id == wId ) {
                 widgets.splice(w, 1);
@@ -82,6 +103,7 @@ module.exports = function (app) {
         widget.pageId = pageId;
         widget._id = (new Date()).getTime();
         widgets.push(widget);
+        ids.push(widget._id);
         res.json(widget);
     }
 
