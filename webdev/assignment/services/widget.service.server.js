@@ -4,9 +4,10 @@ module.exports = function (app) {
     app.put("/api/widget/:widgetId", updateWidget);
     app.delete("/api/widget/:widgetId", deleteWidget);
     app.post("/api/page/:pageId/widget",createWidget);
-    var multer = require('multer'); // npm install multer --save
+    var multer = require('multer');
     var upload = multer({ dest: __dirname+'/../../public/uploads' });
     app.post("/api/upload", upload.single('myFile'),uploadImage);
+    app.put("/page/:pageId/widget",sortable);
 
     var ids = ["123","234","345","567","678"];
     var result = [
@@ -21,32 +22,15 @@ module.exports = function (app) {
             "_id": "678", "widgetType": "YOUTUBE", "pageId": "321", "width": "100%",
             "url": "https://youtu.be/AM2Ivdi9c4E"
         }];
-    var widgets = [];
+    var widgets = result;
 
-    ids.forEach(function(key) {
-        var found = false;
-        result = result.filter(function(item) {
-            if(!found && item._id == key) {
-                widgets.push(item);
-                found = true;
-                return false;
-            } else
-                return true;
-        })
-    })
-
-    app.put("/page/:pageId/widget",function (req,res) {
-        console.log("in sortable");
+    function sortable(req,res){
         var initial = req.query.initial;
         var final = req.query.final;
-        console.log(initial.split(","));
         ids = initial.split(",");
-        console.log(ids);
-    });
+    }
 
     function uploadImage(req, res) {
-        console.log("partha");
-        console.log(req.body);
         var widgetId      = req.body.widgetId;
         var width         = req.body.width;
         var myFile        = req.file;
@@ -59,8 +43,6 @@ module.exports = function (app) {
     }
 
     function findAllWidgetsForPage(req, res) {
-        console.log("in all");
-        console.log(ids);
         result = widgets;
         widgets = [];
         ids.forEach(function(key) {
@@ -74,8 +56,7 @@ module.exports = function (app) {
                     return true;
             })
         })
-        console.log(result);
-        console.log(widgets);
+        result = widgets;
         var pId = req.params.pageId;
 
         var allwidgets = [];
@@ -101,6 +82,12 @@ module.exports = function (app) {
 
     function deleteWidget(req, res) {
         var wId = req.params.widgetId;
+        for(var id in ids){
+            if (ids[id] == wId){
+                ids.splice(id,1);
+                break;
+            }
+        }
         for(var w in widgets) {
             if( widgets[w]._id == wId ) {
                 widgets.splice(w, 1);
@@ -116,6 +103,7 @@ module.exports = function (app) {
         widget.pageId = pageId;
         widget._id = (new Date()).getTime();
         widgets.push(widget);
+        ids.push(widget._id);
         res.json(widget);
     }
 
