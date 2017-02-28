@@ -5,14 +5,19 @@
 
     function sortableDir($http) {
         function linkFunc(scope, element, attributes) {
+            var startIndex = -1;
+            var endIndex = -1;
             element.sortable({
-                axis: 'y'
+                axis: 'y',
+                start: function(event,ui){
+                    startIndex=ui.item.index();
+                },
+                stop : function (event,ui) {
+                    endIndex = ui.item.index();
+                    if (startIndex != endIndex){
+                    $http.put("/page/:pageId/widget?initial="+startIndex+"&final="+endIndex);}
+                }
             });
-            element.on( "sortstop", function( event, ui ) {
-
-                var order1 = element.sortable('toArray');
-                $http.put("/page/:pageId/widget?initial="+order1+"&final="+order1);
-            } );
         }
         return {
             link: linkFunc
