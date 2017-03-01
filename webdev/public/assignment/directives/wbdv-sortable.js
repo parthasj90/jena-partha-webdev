@@ -3,7 +3,7 @@
         .module('WebAppMaker')
         .directive('wbdvSortable', sortableDir);
 
-    function sortableDir($http) {
+    function sortableDir() {
         function linkFunc(scope, element, attributes) {
             var startIndex = -1;
             var endIndex = -1;
