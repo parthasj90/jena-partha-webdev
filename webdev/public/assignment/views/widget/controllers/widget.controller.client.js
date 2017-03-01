@@ -6,6 +6,7 @@
     function WidgetListController($sce, $routeParams, WidgetService) {
         var vm = this;
         vm.doYouTrustUrl = doYouTrustUrl;
+        vm.updatePosition = updatePosition;
         var userId = $routeParams.uid;
         var websiteId = $routeParams.wid;
         var pageId = $routeParams.pid;
@@ -28,6 +29,12 @@
             var id = urlParts[urlParts.length - 1];
             baseUrl += id;
             return $sce.trustAsResourceUrl(baseUrl);
+        }
+        function updatePosition(initial,final){
+            WidgetService
+                .updatePosition(initial,final,pageId)
+                .success(function (widgets) {
+                });
         }
 
     }

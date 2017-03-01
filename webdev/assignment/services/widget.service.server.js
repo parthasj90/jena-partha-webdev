@@ -4,10 +4,24 @@ module.exports = function (app) {
     app.put("/api/widget/:widgetId", updateWidget);
     app.delete("/api/widget/:widgetId", deleteWidget);
     app.post("/api/page/:pageId/widget",createWidget);
+    app.put("/page/:pageId/widget",sortable);
+
     var multer = require('multer');
     var upload = multer({ dest: __dirname+'/../../public/uploads' });
-    app.post("/api/upload", upload.single('myFile'),uploadImage);
-    app.put("/page/:pageId/widget",sortable);
+    app.post("/api/upload",uploadImage);
+
+    function uploadImage(req, res,next) {
+        console.log("gone");
+        var widgetId      = req.body.widgetId;
+        var width         = req.body.width;
+        var myFile        = req.file;
+        var originalname  = myFile.originalname; // file name on user's computer
+        var filename      = myFile.filename;     // new file name in upload folder
+        var path          = myFile.path;         // full path of uploaded file
+        var destination   = myFile.destination;  // folder where file is saved to
+        var size          = myFile.size;
+        var mimetype      = myFile.mimetype;
+    }
 
     var widgets = [
         {"_id": "123", "widgetType": "HEADING", "pageId": "321", "size": 2, "text": "GIZMODO"},
@@ -25,21 +39,21 @@ module.exports = function (app) {
     function sortable(req,res){
         var initial = req.query.initial;
         var final = req.query.final;
-        var removed = widgets.splice(initial, 1);
-        widgets.splice(final,0,removed[0]);
+        var pageId = req.params.pageId;
+        var widgetsList = [];
+        widgets = widgets.filter(function(x) {
+            if(pageId === x.pageId) {
+                widgetsList.push(x);
+            }
+            return widgets.indexOf(x) < 0
+        });
+        var widget  = widgetsList[initial];
+        widgetsList.splice(initial, 1);
+        widgetsList.splice(final,0, widget);
+        widgets.push.apply(widgets, widgetsList);
+        res.json(widgets);
     }
 
-    function uploadImage(req, res) {
-        var widgetId      = req.body.widgetId;
-        var width         = req.body.width;
-        var myFile        = req.file;
-        var originalname  = myFile.originalname; // file name on user's computer
-        var filename      = myFile.filename;     // new file name in upload folder
-        var path          = myFile.path;         // full path of uploaded file
-        var destination   = myFile.destination;  // folder where file is saved to
-        var size          = myFile.size;
-        var mimetype      = myFile.mimetype;
-    }
 
     function findAllWidgetsForPage(req, res) {
         var pId = req.params.pageId;

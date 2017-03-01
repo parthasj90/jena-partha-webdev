@@ -15,7 +15,7 @@
                 stop : function (event,ui) {
                     endIndex = ui.item.index();
                     if (startIndex != endIndex){
-                    $http.put("/page/:pageId/widget?initial="+startIndex+"&final="+endIndex);}
+                        scope.model.updatePosition(startIndex, endIndex);}
                 }
             });
         }
