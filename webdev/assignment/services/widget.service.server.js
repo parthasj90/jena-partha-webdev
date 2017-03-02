@@ -21,8 +21,6 @@ module.exports = function (app) {
     app.post("/api/upload", upload.single('myFile'), uploadImage);
 
     function uploadImage(req, res) {
-        console.log(req.myFile);
-        console.log(req.body);
         var pageId = null;
         var widgetId = req.body.widgetId;
         var width = req.body.width;
