@@ -32,7 +32,7 @@ module.exports = function (app) {
         var destination = myFile.destination;
 
         for (var i in widgets) {
-            if (widgets[i]._id === widgetId) {
+            if (widgets[i]._id == widgetId) {
                 widgets[i].width = width;
                 widgets[i].url = req.protocol + '://' + req.get('host') + "/uploads/" + myFile.filename;
                 pageId = widgets[i].pageId;
