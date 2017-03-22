@@ -14,6 +14,7 @@
             var promise = UserService.findUserByCredentials(user.username, user.password);
             promise.success(function(user){
             if (user) {
+                console.log(user);
                 $location.url('/user/' + user._id);
             } else {
                 vm.error = 'user not found';
@@ -35,6 +36,7 @@
 
         var userId = $routeParams['uid'];
         function init() {
+            console.log(userId);
             var promise = UserService.findUserById(userId);
             promise.success(function(user){
                 vm.user = user});
@@ -47,7 +49,7 @@
                 .updateUser(userId, newUser)
                 .success(function (user) {
                     if (user != null) {
-                        $location.url('/user/' + user._id);
+                        $location.url('/user/' + userId);
                     } else {
                         vm.error = "Unable to update user";
                     }

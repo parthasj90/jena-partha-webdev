@@ -1,4 +1,4 @@
-module.exports = function (app) {
+module.exports = function (app,model) {
     app.get('/api/page/:pageId/widget', findAllWidgetsForPage);
     app.get("/api/widget/:widgetId", findWidgetById);
     app.put("/api/widget/:widgetId", updateWidget);
@@ -40,18 +40,8 @@ module.exports = function (app) {
         res.redirect("/assignment/#/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/" + widgetId);
     }
 
-    var widgets = [
-        {"_id": "123", "widgetType": "HEADING", "pageId": "321", "size": 2, "text": "GIZMODO"},
-        {"_id": "234", "widgetType": "HEADING", "pageId": "321", "size": 4, "text": "Lorem ipsum"},
-        {
-            "_id": "345", "widgetType": "IMAGE", "pageId": "321", "width": "100%",
-            "url": "http://lorempixel.com/400/200/"
-        },
-        {"_id": "567", "widgetType": "HEADING", "pageId": "321", "size": 4, "text": "Lorem ipsum"},
-        {
-            "_id": "678", "widgetType": "YOUTUBE", "pageId": "321", "width": "100%",
-            "url": "https://youtu.be/AM2Ivdi9c4E"
-        }];
+    var pageModel = model.pageModel;
+    var widgetModel = model.widgetModel;
 
     function sortable(req,res){
         var initial = req.query.initial;
@@ -74,53 +64,64 @@ module.exports = function (app) {
 
     function findAllWidgetsForPage(req, res) {
         var pId = req.params.pageId;
-
-        var allwidgets = [];
-        for(var w in widgets) {
-            if(pId === widgets[w].pageId) {
-                allwidgets.push(widgets[w]);
-            }
-        }
-        res.json(allwidgets);
+        widgetModel
+            .findAllWidgetsForPage(pId)
+            .then(function (widgets) {
+                res.send(widgets);
+            }, function (err) {
+                res.sendStatus(500).send(err);
+            });
     }
 
     function updateWidget(req, res) {
         var wId = req.params.widgetId;
         var widget = req.body;
-        for(var w in widgets) {
-            if( widgets[w]._id == wId ) {
-                widgets[w] = widget;
-                res.json(widgets[w]);
-                return;
-            }
-        }
+        widgetModel
+            .updateWidget(wId,widget)
+            .then(function (widget) {
+                res.send(widget);
+            }, function (err) {
+                res.sendStatus(500).send(err);
+            });
     }
 
     function deleteWidget(req, res) {
         var wId = req.params.widgetId;
-        for(var w in widgets) {
-            if( widgets[w]._id == wId ) {
-                widgets.splice(w, 1);
-                res.json(w);
-                return;
-            }
-        }
+        widgetModel
+            .deleteWidget(wId)
+            .then(function (widget) {
+                res.send(widget);
+            }, function (err) {
+                res.sendStatus(500).send(err);
+            });
     }
 
     function createWidget(req, res) {
         var pageId = req.params.pageId;
         var widget = req.body;
-        widget.pageId = pageId;
-        widget._id = (new Date()).getTime();
-        widgets.push(widget);
-        res.json(widget);
+        widgetModel
+            .createWidget(pageId,widget)
+            .then(function (widget) {
+                console.log("in create widget going to page model" ,widget);
+                pageModel
+                    .addWidget(pageId,widget._id)
+                    .then(function (page) {
+                        console.log("inside addpage",widget);
+                        res.send(widget);
+                    })
+            }, function (err) {
+                res.sendStatus(500).send(err);
+            });
     }
 
     function findWidgetById(req, res) {
         var wId = req.params.widgetId;
-        var widget = widgets.find(function (w) {
-            return w._id == wId;
-        });
-        res.json(widget);
+        widgetModel
+            .findWidgetById(wId)
+            .then(function (widget) {
+                res.send(widget);
+            }, function (err) {
+                res.sendStatus(500).send(err);
+            });
     }
 };

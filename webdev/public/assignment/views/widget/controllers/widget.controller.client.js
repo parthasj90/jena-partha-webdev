@@ -115,17 +115,17 @@
             vm.userId = userId;
             vm.pageId = pageId;
             //vm.widgetId = widgetId;
-            WidgetService
+           /* WidgetService
                 .findWidgetsByPageId(pageId)
                 .success(function (widgets) {
                     vm.widgets = widgets;
-                });
+                });*/
         }
 
         init();
         function createWidget(type) {
             var newWidget = {};
-            newWidget.widgetType = type;
+            newWidget.type = type;
             WidgetService
                 .createWidget(pageId, newWidget)
                 .success(function (w) {
