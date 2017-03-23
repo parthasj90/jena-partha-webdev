@@ -36,15 +36,19 @@ module.exports = function (model) {
     }
 
     function deleteWidget(widgetId) {
-        var deferred = q.defer();
-        widgetModel.findByIdAndRemove(widgetId, function (err, status) {
-            if(err) {
-                deferred.abort(err);
-            } else {
-                deferred.resolve(status);
-            }
+        return widgetModel.findByIdAndRemove(widgetId, function (err, widget) {
+            var pageId = widget._page;
+            var order = widget.order;
+            widgetModel.find({_page: pageId}, function (err, widgets) {
+                widgets.forEach(function (widget) {
+                    if (widget.order > order) {
+                        widget.order = widget.order - 1;
+                        widget.save();
+                    }
+                });
+            });
+            widget.remove();
         });
-        return deferred.promise;
     }
 
     function findWidgetById(widgetId) {
