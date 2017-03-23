@@ -12,8 +12,8 @@ module.exports = function (model) {
         updateWebsite: updateWebsite,
         deleteWebsite: deleteWebsite,
         addPage: addPage,
-        setModel:setModel,
-        getModel:getModel
+        setModel: setModel,
+        getModel: getModel
     };
     return api;
 
@@ -23,13 +23,14 @@ module.exports = function (model) {
         websiteModel = mongoose.model('website', websiteSchema);
 
     }
+
     function getModel() {
         return websiteModel;
     }
 
-    function updateWebsite(websiteId,website) {
+    function updateWebsite(websiteId, website) {
         var deferred = q.defer();
-        websiteModel.findByIdAndUpdate(websiteId,website,function (err,website) {
+        websiteModel.findByIdAndUpdate(websiteId, website, function (err, website) {
             deferred.resolve(website);
         });
         return deferred.promise;
@@ -38,7 +39,7 @@ module.exports = function (model) {
     function deleteWebsite(websiteId) {
         var deferred = q.defer();
         websiteModel.findByIdAndRemove(websiteId, function (err, website) {
-            if(err) {
+            if (err) {
                 deferred.abort(err);
             } else {
                 website.remove();
@@ -61,19 +62,18 @@ module.exports = function (model) {
     function findAllWebsitesForUser(userId) {
         var deferred = q.defer();
         websiteModel
-            .find({_user:userId}, function (err, websites) {
+            .find({_user: userId}, function (err, websites) {
                 deferred.resolve(websites);
             });
         return deferred.promise;
     }
 
 
-
-    function createWebsiteForUser(userId,website) {
+    function createWebsiteForUser(userId, website) {
         var deferred = q.defer();
         website._user = userId;
         websiteModel.create(website, function (err, website) {
-            if(err) {
+            if (err) {
                 deferred.abort();
             } else {
                 deferred.resolve(website);
@@ -82,7 +82,7 @@ module.exports = function (model) {
         return deferred.promise;
     }
 
-    function addPage(websiteId,pageId) {
+    function addPage(websiteId, pageId) {
         var deferred = q.defer();
         websiteModel
             .findById(websiteId, function (err, website) {

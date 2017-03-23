@@ -28,6 +28,7 @@
         function checkSafeHtml(text) {
             return $sce.trustAsHtml(text);
         }
+
         function doYouTrustUrl(url) {
             var baseUrl = "https://www.youtube.com/embed/";
             var urlParts = url.split('/');
@@ -35,9 +36,10 @@
             baseUrl += id;
             return $sce.trustAsResourceUrl(baseUrl);
         }
-        function updatePosition(initial,final){
+
+        function updatePosition(initial, final) {
             WidgetService
-                .updatePosition(initial,final,pageId)
+                .updatePosition(initial, final, pageId)
                 .success(function (widgets) {
                 });
         }
@@ -115,16 +117,17 @@
         var userId = $routeParams.uid;
         var websiteId = $routeParams.wid;
         var pageId = $routeParams.pid;
+
         function init() {
             vm.websiteId = websiteId;
             vm.userId = userId;
             vm.pageId = pageId;
             //vm.widgetId = widgetId;
-           /* WidgetService
-                .findWidgetsByPageId(pageId)
-                .success(function (widgets) {
-                    vm.widgets = widgets;
-                });*/
+            /* WidgetService
+             .findWidgetsByPageId(pageId)
+             .success(function (widgets) {
+             vm.widgets = widgets;
+             });*/
         }
 
         init();

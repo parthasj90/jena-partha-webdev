@@ -17,11 +17,11 @@ module.exports = function (model) {
         icon: String,
         deletable: Boolean,
         formatted: Boolean,
-        dateCreated:Date,
+        dateCreated: Date,
         order: Number
     }, {collection: 'widget'});
 
-    widgetSchema.post('remove', function(next) {
+    widgetSchema.post('remove', function (next) {
         var pageModel = model.pageModel.getModel();
         var widget = this;
         pageModel.findById(widget._page)

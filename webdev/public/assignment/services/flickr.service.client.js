@@ -1,4 +1,4 @@
-(function(){
+(function () {
     angular
         .module("WebAppMaker")
         .service("FlickrService", FlickrService);
@@ -7,16 +7,15 @@
     var secret = "376d848fd48c36e2";
     var urlBase = "https://api.flickr.com/services/rest/?method=flickr.photos.search&format=json&api_key=API_KEY&text=TEXT";
 
-    function FlickrService($http){
+    function FlickrService($http) {
 
         var api = {
-            searchPhotos : searchPhotos
+            searchPhotos: searchPhotos
         };
         return api;
 
 
-
-        function searchPhotos(searchTerm){
+        function searchPhotos(searchTerm) {
             var url = urlBase
                 .replace("API_KEY", key)
                 .replace("TEXT", searchTerm);

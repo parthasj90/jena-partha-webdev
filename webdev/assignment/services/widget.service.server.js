@@ -1,10 +1,10 @@
-module.exports = function (app,model) {
+module.exports = function (app, model) {
     app.get('/api/page/:pageId/widget', findAllWidgetsForPage);
     app.get("/api/widget/:widgetId", findWidgetById);
     app.put("/api/widget/:widgetId", updateWidget);
     app.delete("/api/widget/:widgetId", deleteWidget);
-    app.post("/api/page/:pageId/widget",createWidget);
-    app.put("/page/:pageId/widget",sortable);
+    app.post("/api/page/:pageId/widget", createWidget);
+    app.put("/page/:pageId/widget", sortable);
 
     var multer = require('multer');
     var storage = multer.diskStorage({
@@ -34,7 +34,7 @@ module.exports = function (app,model) {
             .then(
                 function (widget) {
                     widget.width = width;
-                    widget.url =  req.protocol + '://' + req.get('host') + "/uploads/" + myFile.filename;
+                    widget.url = req.protocol + '://' + req.get('host') + "/uploads/" + myFile.filename;
                     pageId = widget._page;
 
                     widgetModel
@@ -57,7 +57,7 @@ module.exports = function (app,model) {
     var pageModel = model.pageModel;
     var widgetModel = model.widgetModel;
 
-    function sortable(req,res){
+    function sortable(req, res) {
         var initial = req.query.initial;
         var final = req.query.final;
         var pageId = req.params.pageId;
@@ -86,7 +86,7 @@ module.exports = function (app,model) {
         var wId = req.params.widgetId;
         var widget = req.body;
         widgetModel
-            .updateWidget(wId,widget)
+            .updateWidget(wId, widget)
             .then(function (widget) {
                 res.send(widget);
             }, function (err) {
@@ -109,13 +109,11 @@ module.exports = function (app,model) {
         var pageId = req.params.pageId;
         var widget = req.body;
         widgetModel
-            .createWidget(pageId,widget)
+            .createWidget(pageId, widget)
             .then(function (widget) {
-                console.log("in create widget going to page model" ,widget);
                 pageModel
-                    .addWidget(pageId,widget._id)
+                    .addWidget(pageId, widget._id)
                     .then(function (page) {
-                        console.log("inside addpage",widget);
                         res.send(widget);
                     })
             }, function (err) {

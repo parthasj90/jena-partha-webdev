@@ -7,19 +7,16 @@
         var vm = this;
 
         function init() {
-            console.log("Inside flicker controller");
             vm.userId = $routeParams['uid'];
             vm.websiteId = $routeParams['wid'];
             vm.pageId = $routeParams['pid'];
             vm.currentWidgetId = $routeParams['wgid'];
 
             WidgetService.findWidgetById(vm.currentWidgetId)
-                .success(function(curWidget){
-                    console.log("Success");
+                .success(function (curWidget) {
                     vm.currentWidget = curWidget;
                 })
-                .error(function(err){
-                    console.log("Error");
+                .error(function (err) {
                     vm.error = "Error while fetching current widget!! Please try after sometime";
                 });
         }
@@ -28,12 +25,9 @@
 
         vm.searchPhotos = function (searchTerm) {
 
-            console.log("Inside search photos");
-
             FlickrService
                 .searchPhotos(searchTerm)
                 .then(function (response) {
-                    console.log(response);
                     data = response.data.replace("jsonFlickrApi(", "");
                     data = data.substring(0, data.length - 1);
                     data = JSON.parse(data);

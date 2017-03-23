@@ -11,9 +11,9 @@ module.exports = function (model) {
         findPageById: findPageById,
         updatePage: updatePage,
         deletePage: deletePage,
-        addWidget:addWidget,
-        setModel:setModel,
-        getModel:getModel
+        addWidget: addWidget,
+        setModel: setModel,
+        getModel: getModel
     };
     return api;
 
@@ -23,13 +23,14 @@ module.exports = function (model) {
         pageModel = mongoose.model('page', pageSchema);
 
     }
+
     function getModel() {
         return pageModel;
     }
 
-    function updatePage(pageId,page) {
+    function updatePage(pageId, page) {
         var deferred = q.defer();
-        pageModel.findByIdAndUpdate(pageId,page,function (err,website) {
+        pageModel.findByIdAndUpdate(pageId, page, function (err, website) {
             deferred.resolve(page);
         });
         return deferred.promise;
@@ -38,7 +39,7 @@ module.exports = function (model) {
     function deletePage(pageId) {
         var deferred = q.defer();
         pageModel.findByIdAndRemove(pageId, function (err, page) {
-            if(err) {
+            if (err) {
                 deferred.abort(err);
             } else {
                 page.remove();
@@ -61,19 +62,18 @@ module.exports = function (model) {
     function findAllPagesForWebsite(websiteId) {
         var deferred = q.defer();
         pageModel
-            .find({_website:websiteId}, function (err, pages) {
+            .find({_website: websiteId}, function (err, pages) {
                 deferred.resolve(pages);
             });
         return deferred.promise;
     }
 
 
-
-    function createPage(websiteId,page) {
+    function createPage(websiteId, page) {
         var deferred = q.defer();
         page._website = websiteId;
         pageModel.create(page, function (err, page) {
-            if(err) {
+            if (err) {
                 deferred.abort();
             } else {
                 deferred.resolve(page);
@@ -82,7 +82,7 @@ module.exports = function (model) {
         return deferred.promise;
     }
 
-    function addWidget(pageId,widgetId) {
+    function addWidget(pageId, widgetId) {
         var deferred = q.defer();
         pageModel
             .findById(pageId, function (err, page) {

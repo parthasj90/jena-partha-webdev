@@ -54,12 +54,12 @@
             WebsiteService
                 .updateWebsite(websiteId, newWebsite)
                 .success(function (site) {
-                if (site != null) {
-                    $location.url('/user/' + userId + "/website");
-                } else {
-                    vm.error = "Unable to update website";
-                }
-            });
+                    if (site != null) {
+                        $location.url('/user/' + userId + "/website");
+                    } else {
+                        vm.error = "Unable to update website";
+                    }
+                });
 
         }
 
@@ -67,8 +67,8 @@
             WebsiteService
                 .deleteWebsite(websiteId)
                 .success(function () {
-                $location.url('/user/' + userId + "/website");
-            });
+                    $location.url('/user/' + userId + "/website");
+                });
 
         }
     }
@@ -85,6 +85,7 @@
         vm.createWebsite = createWebsite;
 
         var userId = $routeParams.uid;
+
         function init() {
             vm.userId = userId;
             WebsiteService
@@ -99,8 +100,8 @@
             WebsiteService
                 .createWebsite(userId, newWebsite)
                 .success(function () {
-                $location.url('/user/' + userId + "/website");
-            });
+                    $location.url('/user/' + userId + "/website");
+                });
 
 
         }

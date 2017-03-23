@@ -6,19 +6,20 @@
     function loginController(UserService, $location) {
         var vm = this;
         vm.login = login;
-        function init(){
+        function init() {
 
         }
+
         init();
         function login(user) {
             var promise = UserService.findUserByCredentials(user.username, user.password);
-            promise.success(function(user){
-            if (user) {
-                console.log(user);
-                $location.url('/user/' + user._id);
-            } else {
-                vm.error = 'user not found';
-            }});
+            promise.success(function (user) {
+                if (user) {
+                    $location.url('/user/' + user._id);
+                } else {
+                    vm.error = 'user not found';
+                }
+            });
         }
     }
 })();
@@ -35,11 +36,12 @@
         // vm.deleteUser = deleteUsers;
 
         var userId = $routeParams['uid'];
+
         function init() {
-            console.log(userId);
             var promise = UserService.findUserById(userId);
-            promise.success(function(user){
-                vm.user = user});
+            promise.success(function (user) {
+                vm.user = user
+            });
         }
 
         init();
@@ -66,9 +68,10 @@
         var vm = this;
         vm.register = register;
 
-        function init(){
+        function init() {
 
         }
+
         init();
 
         function register(user) {
@@ -81,7 +84,7 @@
                         } else {
                             vm.error = 'unable to redirect to user profile';
                         }
-                });
+                    });
             }
             else {
                 vm.error = 'passwords do not match';

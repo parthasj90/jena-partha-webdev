@@ -1,9 +1,9 @@
-module.exports = function (app,model) {
+module.exports = function (app, model) {
     app.get('/api/user/:userId/website', findAllWebsitesForUser);
     app.get("/api/website/:websiteId", findWebsiteById);
     app.put("/api/website/:websiteId", updateWebsite);
     app.delete("/api/website/:websiteId", deleteWebsite);
-    app.post("/api/user/:userId/website",createWebsite);
+    app.post("/api/user/:userId/website", createWebsite);
 
     var userModel = model.userModel;
     var websiteModel = model.websiteModel;
@@ -24,7 +24,7 @@ module.exports = function (app,model) {
         var wId = req.params.websiteId;
         var website = req.body;
         websiteModel
-            .updateWebsite(wId,website)
+            .updateWebsite(wId, website)
             .then(function (website) {
                 res.send(website);
             }, function (err) {
@@ -47,10 +47,10 @@ module.exports = function (app,model) {
         var userId = req.params.userId;
         var website = req.body;
         websiteModel
-            .createWebsiteForUser(userId,website)
+            .createWebsiteForUser(userId, website)
             .then(function (website) {
                 userModel
-                    .addWebsite(userId,website._id)
+                    .addWebsite(userId, website._id)
                     .then(function (user) {
                         res.send(website);
                     })

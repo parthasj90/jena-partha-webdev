@@ -1,9 +1,9 @@
-module.exports = function (app,model) {
+module.exports = function (app, model) {
     app.get('/api/website/:websiteId/page', findAllPagesForWebsite);
     app.get("/api/page/:pageId", findPageById);
     app.put("/api/page/:pageId", updatePage);
     app.delete("/api/page/:pageId", deletePage);
-    app.post("/api/website/:websiteId/page",createPage);
+    app.post("/api/website/:websiteId/page", createPage);
 
     var websiteModel = model.websiteModel;
     var pageModel = model.pageModel;
@@ -24,7 +24,7 @@ module.exports = function (app,model) {
         var pId = req.params.pageId;
         var page = req.body;
         pageModel
-            .updatePage(pId,page)
+            .updatePage(pId, page)
             .then(function (page) {
                 res.send(page);
             }, function (err) {
@@ -47,11 +47,10 @@ module.exports = function (app,model) {
         var websiteId = req.params.websiteId;
         var page = req.body;
         pageModel
-            .createPage(websiteId,page)
+            .createPage(websiteId, page)
             .then(function (page) {
-                console.log("in hahkasdfkasbfka",page);
                 websiteModel
-                    .addPage(websiteId,page._id)
+                    .addPage(websiteId, page._id)
                     .then(function (website) {
                         res.send(page);
                     })

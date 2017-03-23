@@ -11,9 +11,9 @@ module.exports = function (model) {
         findWidgetById: findWidgetById,
         updateWidget: updateWidget,
         deleteWidget: deleteWidget,
-        reorderWidget:reorderWidget,
-        setModel:setModel,
-        getModel:getModel
+        reorderWidget: reorderWidget,
+        setModel: setModel,
+        getModel: getModel
     };
     return api;
 
@@ -23,13 +23,14 @@ module.exports = function (model) {
         widgetModel = mongoose.model("widget", widgetSchema);
 
     }
+
     function getModel() {
         return widgetModel;
     }
 
-    function updateWidget(widgetId,widget) {
+    function updateWidget(widgetId, widget) {
         var deferred = q.defer();
-        widgetModel.findByIdAndUpdate(widgetId,widget,function (err,website) {
+        widgetModel.findByIdAndUpdate(widgetId, widget, function (err, website) {
             deferred.resolve(widget);
         });
         return deferred.promise;
@@ -63,20 +64,19 @@ module.exports = function (model) {
 
     function findAllWidgetsForPage(pageId) {
         return widgetModel
-            .find({_page:pageId})
-            .sort({order:1});
+            .find({_page: pageId})
+            .sort({order: 1});
     }
 
-    function createWidget(pageId,widget) {
+    function createWidget(pageId, widget) {
         var deferred = q.defer();
         widget._page = pageId;
-        console.log(widget,pageId);
         widgetModel
-            .find({_page:pageId},function (err,widgets) {
+            .find({_page: pageId}, function (err, widgets) {
                 widget.order = widgets.length;
                 widgetModel
-                    .create(widget,function (err,widget) {
-                        if(err) {
+                    .create(widget, function (err, widget) {
+                        if (err) {
                             deferred.reject(err);
                         } else {
                             deferred.resolve(widget);
@@ -87,7 +87,7 @@ module.exports = function (model) {
         return deferred.promise;
     }
 
-    function reorderWidget(pageId,start,end) {
+    function reorderWidget(pageId, start, end) {
         return widgetModel
             .find({_page: pageId}, function (err, widgets) {
                 widgets.forEach(function (widget) {
@@ -115,4 +115,4 @@ module.exports = function (model) {
             });
     }
 
-    };
+};
