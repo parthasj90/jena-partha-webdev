@@ -49,6 +49,7 @@ module.exports = function (app,model) {
         pageModel
             .createPage(websiteId,page)
             .then(function (page) {
+                console.log("in hahkasdfkasbfka",page);
                 websiteModel
                     .addPage(websiteId,page._id)
                     .then(function (website) {

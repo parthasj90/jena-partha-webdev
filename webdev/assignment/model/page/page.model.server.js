@@ -1,9 +1,9 @@
 module.exports = function (model) {
     var q = require('q');
     var mongoose = require('mongoose');
-    var pageSchema = require('./page.schema.server')();
-
-    var pageModel = mongoose.model('page', pageSchema);
+    var pageSchema;
+    var model = {};
+    var pageModel;
 
     var api = {
         createPage: createPage,
@@ -11,9 +11,21 @@ module.exports = function (model) {
         findPageById: findPageById,
         updatePage: updatePage,
         deletePage: deletePage,
-        addWidget:addWidget
+        addWidget:addWidget,
+        setModel:setModel,
+        getModel:getModel
     };
     return api;
+
+    function setModel(_model) {
+        model = _model;
+        pageSchema = require('./page.schema.server')(model);
+        pageModel = mongoose.model('page', pageSchema);
+
+    }
+    function getModel() {
+        return pageModel;
+    }
 
     function updatePage(pageId,page) {
         var deferred = q.defer();
@@ -29,7 +41,7 @@ module.exports = function (model) {
             if(err) {
                 deferred.abort(err);
             } else {
-                //page.remove();
+                page.remove();
                 deferred.resolve(page);
             }
         });

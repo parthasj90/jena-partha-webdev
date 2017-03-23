@@ -1,4 +1,4 @@
-module.exports = function () {
+module.exports = function (model) {
     var mongoose = require('mongoose');
 
     var widgetSchema = mongoose.Schema({
@@ -17,8 +17,22 @@ module.exports = function () {
         icon: String,
         deletable: Boolean,
         formatted: Boolean,
-        dateCreated:Date
+        dateCreated:Date,
+        order: Number
     }, {collection: 'widget'});
+
+    widgetSchema.post('remove', function(next) {
+        var pageModel = model.pageModel.getModel();
+        var widget = this;
+        pageModel.findById(widget._page)
+            .then(function (page) {
+                var index = page.widgets.indexOf(widget._id);
+                if (index > -1) {
+                    page.widgets.splice(index, 1);
+                    page.save();
+                }
+            });
+    });
 
     return widgetSchema;
 };

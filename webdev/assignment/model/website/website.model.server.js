@@ -1,9 +1,9 @@
 module.exports = function (model) {
     var q = require('q');
     var mongoose = require('mongoose');
-    var websiteSchema = require('./website.schema.server')();
-
-    var websiteModel = mongoose.model('website', websiteSchema);
+    var websiteSchema;
+    var model = {};
+    var websiteModel;
 
     var api = {
         createWebsiteForUser: createWebsiteForUser,
@@ -11,9 +11,21 @@ module.exports = function (model) {
         findWebsiteById: findWebsiteById,
         updateWebsite: updateWebsite,
         deleteWebsite: deleteWebsite,
-        addPage: addPage
+        addPage: addPage,
+        setModel:setModel,
+        getModel:getModel
     };
     return api;
+
+    function setModel(_model) {
+        model = _model;
+        websiteSchema = require('./website.schema.server')(model);
+        websiteModel = mongoose.model('website', websiteSchema);
+
+    }
+    function getModel() {
+        return websiteModel;
+    }
 
     function updateWebsite(websiteId,website) {
         var deferred = q.defer();
@@ -29,7 +41,7 @@ module.exports = function (model) {
             if(err) {
                 deferred.abort(err);
             } else {
-                //website.remove();
+                website.remove();
                 deferred.resolve(website);
             }
         });
@@ -74,7 +86,7 @@ module.exports = function (model) {
         var deferred = q.defer();
         websiteModel
             .findById(websiteId, function (err, website) {
-                website.pages.push(websiteId);
+                website.pages.push(pageId);
                 website.save();
                 deferred.resolve(website);
             });

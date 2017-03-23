@@ -1,9 +1,9 @@
 module.exports = function (model) {
     var q = require('q');
     var mongoose = require('mongoose');
-    var userSchema = require('./user.schema.server')();
-
-    var userModel = mongoose.model('user', userSchema);
+    var userSchema;
+    var model = {};
+    var userModel;
 
     var api = {
         createUser: createUser,
@@ -12,9 +12,21 @@ module.exports = function (model) {
         findUserByCredentials: findUserByCredentials,
         updateUser: updateUser,
         deleteUser: deleteUser,
-        addWebsite: addWebsite
+        addWebsite: addWebsite,
+        setModel:setModel,
+        getModel:getModel
     };
     return api;
+    function setModel(_model) {
+        model = _model;
+        userSchema = require("./user.schema.server")(model);
+        userModel = mongoose.model('user', userSchema);
+
+    }
+    function getModel() {
+        return userModel;
+    }
+
     function updateUser(userId,user) {
         var deferred = q.defer();
         userModel.findByIdAndUpdate( userId,user,function (err,user) {
@@ -29,7 +41,7 @@ module.exports = function (model) {
             if(err) {
                 deferred.abort(err);
             } else {
-                //user.remove();
+                user.remove();
                 deferred.resolve(user);
             }
         });

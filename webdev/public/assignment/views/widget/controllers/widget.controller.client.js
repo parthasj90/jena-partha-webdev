@@ -7,6 +7,7 @@
         var vm = this;
         vm.doYouTrustUrl = doYouTrustUrl;
         vm.updatePosition = updatePosition;
+        vm.checkSafeHtml = checkSafeHtml;
         var userId = $routeParams.uid;
         var websiteId = $routeParams.wid;
         var pageId = $routeParams.pid;
@@ -23,6 +24,10 @@
         }
 
         init();
+
+        function checkSafeHtml(text) {
+            return $sce.trustAsHtml(text);
+        }
         function doYouTrustUrl(url) {
             var baseUrl = "https://www.youtube.com/embed/";
             var urlParts = url.split('/');

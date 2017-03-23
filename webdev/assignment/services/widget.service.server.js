@@ -29,15 +29,29 @@ module.exports = function (app,model) {
         var myFile = req.file;
         var destination = myFile.destination;
 
-        for (var i in widgets) {
-            if (widgets[i]._id == widgetId) {
-                widgets[i].width = width;
-                widgets[i].url = req.protocol + '://' + req.get('host') + "/uploads/" + myFile.filename;
-                pageId = widgets[i].pageId;
-            }
-        }
+        widgetModel
+            .findWidgetById(widgetId)
+            .then(
+                function (widget) {
+                    widget.width = width;
+                    widget.url =  req.protocol + '://' + req.get('host') + "/uploads/" + myFile.filename;
+                    pageId = widget._page;
 
-        res.redirect("/assignment/#/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/" + widgetId);
+                    widgetModel
+                        .updateWidget(widget._id, widget)
+                        .then(
+                            function (updatedWidget) {
+                                res.redirect("/assignment/#/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/" + widgetId);
+                            },
+                            function (failedUpdate) {
+                                res.sendStatus(400).send(failedUpdate);
+                            }
+                        );
+                },
+                function (error) {
+                    res.sendStatus(400).send(error);
+                }
+            );
     }
 
     var pageModel = model.pageModel;
@@ -47,18 +61,13 @@ module.exports = function (app,model) {
         var initial = req.query.initial;
         var final = req.query.final;
         var pageId = req.params.pageId;
-        var widgetsList = [];
-        widgets = widgets.filter(function(x) {
-            if(pageId === x.pageId) {
-                widgetsList.push(x);
-            }
-            return widgets.indexOf(x) < 0
-        });
-        var widget  = widgetsList[initial];
-        widgetsList.splice(initial, 1);
-        widgetsList.splice(final,0, widget);
-        widgets.push.apply(widgets, widgetsList);
-        res.json(widgets);
+        widgetModel
+            .reorderWidget(pageId, initial, final)
+            .then(function (widget) {
+                res.json(widget);
+            }, function (error) {
+                res.sendStatus(500).send(error);
+            });
     }
 
 

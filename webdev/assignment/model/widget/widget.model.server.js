@@ -1,9 +1,9 @@
 module.exports = function (model) {
     var q = require('q');
     var mongoose = require('mongoose');
-    var widgetSchema = require('./widget.schema.server')();
-
-    var widgetModel = mongoose.model('widget', widgetSchema);
+    var widgetSchema;
+    var model = {};
+    var widgetModel;
 
     var api = {
         createWidget: createWidget,
@@ -11,9 +11,21 @@ module.exports = function (model) {
         findWidgetById: findWidgetById,
         updateWidget: updateWidget,
         deleteWidget: deleteWidget,
-        reorderWidget:reorderWidget
+        reorderWidget:reorderWidget,
+        setModel:setModel,
+        getModel:getModel
     };
     return api;
+
+    function setModel(_model) {
+        model = _model;
+        widgetSchema = require('./widget.schema.server')(model);
+        widgetModel = mongoose.model("widget", widgetSchema);
+
+    }
+    function getModel() {
+        return widgetModel;
+    }
 
     function updateWidget(widgetId,widget) {
         var deferred = q.defer();
@@ -46,39 +58,57 @@ module.exports = function (model) {
     }
 
     function findAllWidgetsForPage(pageId) {
-        var deferred = q.defer();
-        widgetModel
-            .find({_page:pageId}, function (err, widgets) {
-                deferred.resolve(widgets);
-            });
-        return deferred.promise;
+        return widgetModel
+            .find({_page:pageId})
+            .sort({order:1});
     }
-
-
 
     function createWidget(pageId,widget) {
         var deferred = q.defer();
         widget._page = pageId;
         console.log(widget,pageId);
-        widgetModel.create(widget, function (err, widget) {
-            if(err) {
-                deferred.reject(err);
-            } else {
-                deferred.resolve(widget);
-            }
-        });
+        widgetModel
+            .find({_page:pageId},function (err,widgets) {
+                widget.order = widgets.length;
+                widgetModel
+                    .create(widget,function (err,widget) {
+                        if(err) {
+                            deferred.reject(err);
+                        } else {
+                            deferred.resolve(widget);
+                        }
+                    });
+            });
+
         return deferred.promise;
     }
 
     function reorderWidget(pageId,start,end) {
-        var deferred = q.defer();
-        widgetModel
-            .findById(pageId, function (err, page) {
-                page.widgets.push(widgetId);
-                page.save();
-                deferred.resolve(page);
-            });
-        return deferred.promise;
+        return widgetModel
+            .find({_page: pageId}, function (err, widgets) {
+                widgets.forEach(function (widget) {
+                    if (start < end) {
+                        if (widget.order == start) {
+                            widget.order = end;
+                            widget.save();
+                        }
+                        else if (widget.order > start && widget.order <= end) {
+                            widget.order = widget.order - 1;
+                            widget.save();
+                        }
+                    } else {
+                        if (widget.order == start) {
+                            widget.order = end;
+                            widget.save();
+                        }
 
+                        else if (widget.order < start && widget.order >= end) {
+                            widget.order = widget.order + 1;
+                            widget.save();
+                        }
+                    }
+                });
+            });
     }
-};
+
+    };

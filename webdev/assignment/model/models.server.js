@@ -9,5 +9,9 @@ module.exports = function () {
         websiteModel: websiteModel,
         widgetModel: widgetModel
     };
+    widgetModel.setModel(model);
+    pageModel.setModel(model);
+    websiteModel.setModel(model);
+    userModel.setModel(model);
     return model;
 };
