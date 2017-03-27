@@ -21,7 +21,7 @@ module.exports = function (model) {
         order: Number
     }, {collection: 'widget'});
 
-    widgetSchema.post('remove', function (next) {
+    widgetSchema.post('remove', function () {
         var pageModel = model.pageModel.getModel();
         var widget = this;
         pageModel.findById(widget._page)

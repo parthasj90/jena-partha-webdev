@@ -27,7 +27,7 @@ module.exports = function (app, model) {
         var userId = req.body.userId;
         var websiteId = req.body.websiteId;
         var myFile = req.file;
-        var destination = myFile.destination;
+        //var destination = myFile.destination;
 
         widgetModel
             .findWidgetById(widgetId)
@@ -40,7 +40,7 @@ module.exports = function (app, model) {
                     widgetModel
                         .updateWidget(widget._id, widget)
                         .then(
-                            function (updatedWidget) {
+                            function (widget) {
                                 res.redirect("/assignment/#/user/" + userId + "/website/" + websiteId + "/page/" + pageId + "/widget/" + widgetId);
                             },
                             function (failedUpdate) {

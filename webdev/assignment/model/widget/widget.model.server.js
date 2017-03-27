@@ -30,7 +30,7 @@ module.exports = function (model) {
 
     function updateWidget(widgetId, widget) {
         var deferred = q.defer();
-        widgetModel.findByIdAndUpdate(widgetId, widget, function (err, website) {
+        widgetModel.findByIdAndUpdate(widgetId, widget, function (err, widget) {
             deferred.resolve(widget);
         });
         return deferred.promise;

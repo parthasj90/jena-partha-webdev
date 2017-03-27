@@ -30,7 +30,7 @@ module.exports = function (model) {
 
     function updatePage(pageId, page) {
         var deferred = q.defer();
-        pageModel.findByIdAndUpdate(pageId, page, function (err, website) {
+        pageModel.findByIdAndUpdate(pageId, page, function (err, page) {
             deferred.resolve(page);
         });
         return deferred.promise;
