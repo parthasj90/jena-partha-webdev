@@ -1,0 +1,57 @@
+<nav class="navbar navbar-fixed-top navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="#/main" id="logo" class="navbar-brand">GoPlaces</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#/admin"><h4>Admin</h4></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="psj_div">
+    <div class="container">
+        <div ng-show="model.error"
+             class="errorAlert alert alert-danger"
+             role="alert"><strong>Error !! </strong>{{model.error}}
+        </div>
+        <form id="logForm" name="loginForm" novalidate>
+            <input ng-model="username"
+                   required
+                   name="username"
+                   class="form-control"
+                   type="text"
+                   placeholder="username"/>
+            <input ng-model="password"
+                   name="password"
+                   class="form-control"
+                   required
+                   type="password"
+                   placeholder="password"/>
+            <button type="submit"
+                    ng-click="model.login(username,password)"
+                    class="btn btn-block btn-primary">Login
+            </button>
+
+        </form>
+        <a href="#/register" class="btn btn-block btn-success">Sign Up</a>
+        <a href="/auth/google" class="btn btn-danger btn-block">
+            <span class="fa fa-google-plus"></span>
+            Login using Google
+        </a>
+        <a href="/auth/facebook" class="btn btn-danger btn-block">
+            <span class="fa fa-facebook"></span>
+            Login using Facebook
+        </a>
+    </div>
+</div>
+

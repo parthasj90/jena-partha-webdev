@@ -1,0 +1,78 @@
+<nav class="navbar navbar-fixed-top navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="#/main" id="logo" class="navbar-brand">GoPlaces</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-hide="currentXploreUser"><a href="#/login"><h4>Login</h4></a></li>
+                <li ng-hide="currentXploreUser"><a href="#/register"> <h4>Register</h4></a></li>
+                <li ng-show="currentXploreUser"><a href="#/user"><h4>{{model.user.firstName}}</h4></a></li>
+                <li ng-show="currentXploreUser"><a href="#/user/edit"><h4>Edit Profile</h4></a></li>
+                <li ng-show="currentXploreUser"><a ng-click="model.logout()"><h4>Logout</h4></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div id="searchResultPage" class="container-fluid">
+    <form id="searchForm" name="searchForm">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <div class="col-md-4">
+                    <input ng-model="searchString"
+                           class="form-control"
+                           type="text"
+                           id="searchString"
+                           name="searchString"
+                           required
+                           placeholder="I'm looking for.."/>
+                </div>
+                <div class="col-md-4">
+                    <input ng-model="searchLocation"
+                           class="form-control"
+                           name="searchLocation"
+                           id="searchLocation"
+                           type="text"
+                           required placeholder="in city or zip-code.." />
+                </div>
+                <div class="col-md-4">
+                    <button type="submit"
+                            ng-click="model.searchPlaces(searchString,searchLocation)"
+                            class="btn btn-block btn-success">Search</button>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </form>
+
+    <div class="container-fluid" id="searchResult">
+        <div ng-show= "model.setFlag">
+            <h3 id="resultTag">Found {{model.searchResultCount}} locations for
+                "{{model.searchString}}" in and around "{{model.searchLocation}}"  </h3>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 col-md-4" ng-repeat = "item in model.out">
+            <div class="thumbnail">
+                <div class="embed-responsive embed-responsive-4by3">
+                    <a href="#/venue/{{item.venueId}}">
+                        <image id="searchImage"  ng-src="{{item.imageURL}}"></image>
+                    </a>
+                </div>
+                <div class="caption">
+                    <a class="noDecoration" href="#/venue/{{item.venueId}}">
+                        <h4>{{item.name | limitTo:33}}</h4>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

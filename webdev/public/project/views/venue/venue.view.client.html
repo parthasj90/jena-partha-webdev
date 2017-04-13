@@ -1,0 +1,109 @@
+<nav class="navbar navbar-fixed-top navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="#/main" id="logo" class="navbar-brand">GoPlaces</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-hide="currentXploreUser"><a href="#/login?venueId={{model.venueId}}"><h4>Login</h4></a></li>
+                <li ng-hide="currentXploreUser"><a href="#/register"> <h4>Register</h4></a></li>
+                <li ng-show="currentXploreUser"><a href="#/user"><h4>{{currentXploreUser.firstName}}</h4></a></li>
+                <li ng-show="currentXploreUser"><a href="#/user/edit"><h4>Edit Profile</h4></a></li>
+                <li ng-show="currentXploreUser"><a ng-click="model.logout()"><h4>Logout</h4></a></li>
+                <li ng-show="currentXploreUser"><a ng-click="model.unregister()"> <h4>Delete Account</h4></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div id="searchResultPage" class="container-fluid">
+    <div class="thumbnail">
+        <div class="row">
+            <div class="col-xs-12 col-md-3">
+                <image id="venueImage"  ng-src="{{model.imgURL}}" class="img-rounded"></image>
+            </div>
+            <div class="col-xs-12 col-md-8 col-md-offset-1">
+                <h2>{{model.venueDetails.name}}</h2>
+                <h4>{{model.addrs}}</h4>
+                <h4>Phone No: {{model.phone}}</h4>
+                <h4>Rating: {{model.rating}}/10</h4>
+                <a style="text-decoration: none" ng-show="model.user && model.isNotFavorite" ng-click="model.addFavorite()"><h4>Add To My Favorite <i class="fa fa-heart-o" aria-hidden="true"></i></h4></a>
+                <a style="text-decoration: none" ng-show="model.user && model.isFavorite" ng-click="model.removeFavorite()"><h4>Remove From My Favorite <i class="fa fa-heart" aria-hidden="true"></i></h4></a>
+            </div>
+        </div>
+    </div>
+    <div class="thumbnail" id="venueBodyThumbnail">
+        <div id="tabs" class="container-fluid">
+            <ul class="nav nav-pills">
+                <li class="active"><a data-toggle="pill" data-target="#tips"><h5>Tips/Comments</h5></a></li>
+                <li><a data-toggle="pill" data-target="#photos"><h5>Photos</h5></a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="tips" class="tab-pane fade in active">
+                    <div class="row">
+                        <h3>Add Tips/Comment</h3>
+                    </div>
+                    <div class="row">
+                        <form>
+                            <textarea type="text"
+                                      rows="3"
+                                      name="commentValue"
+                                      id="commentValue"
+                                      ng-model="commentValue"
+                                      required class="form-control">
+                            </textarea>
+                            <button ng-click="model.addComment(commentValue)" class="btn btn-primary">Done</button>
+                        </form>
+                    </div>
+                    <div ng-hide="model.cmters.length === 0" id="usersCommentsHead" class="row">
+                        <strong><h3>User's Comments</h3></strong>
+                    </div>
+                    <div ng-show="model.cmters.length === 0" class="row">
+                        <strong><h3>No User's Comments. Add the first Tip/Comment</h3></strong>
+                    </div>
+                    <div id="commentsList" class="row" ng-repeat="comment in model.cmters | orderBy: '-commentedOn'">
+                        <div class="col-xs-4 col-md-1">
+                            <image href="#/user/friend/{{comment.commentedUser._id}}"
+                                   id="commentImage"  ng-src="{{comment.commentedUser.displayPicture}}"></image>
+                        </div>
+                        <div id="commentBlockId" class="col-xs-8 col-md-11">
+                            <div id="commentedUser" class="row">
+                                <a href="#/user/friend/{{comment.commentedUser._id}}">
+                                    <h4><strong>{{comment.commentedUser.firstName}}</strong></h4>
+                                </a>
+                            </div>
+                            <div class="row">
+                                <div id="commentValueID" class="col-xs-7 col-md-9">
+                                    {{comment.value}}
+                                </div>
+                                <div ng-show="comment.commentedUser._id === currentXploreUser._id" class="col-xs-1 col-md-1">
+                                    <button id="deleteButton" ng-click="model.deleteComment(comment)" class="btn btn-primary pull-right">Delete</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <h5>{{model.convertDate(comment.commentedOn)}}</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="photos" class="tab-pane fade">
+                    <div id="photosList" class="col-xs-12 col-sm-6 col-md-4" ng-repeat = "img in model.photosURL">
+                        <div class="thumbnail">
+                            <div class="embed-responsive embed-responsive-4by3">
+                                <image id="searchImage"  ng-src="{{img}}"></image>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

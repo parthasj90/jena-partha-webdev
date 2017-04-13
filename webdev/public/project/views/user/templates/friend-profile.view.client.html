@@ -1,0 +1,184 @@
+<nav class="navbar navbar-fixed-top navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="#/main" id="logo" class="navbar-brand">GoPlaces</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-hide="currentXploreUser"><a href="#/login?venueId={{model.venueId}}"><h4>Login</h4></a></li>
+                <li ng-hide="currentXploreUser"><a href="#/register"> <h4>Register</h4></a></li>
+                <li ng-show="currentXploreUser"><a href="#/user"><h4>{{currentXploreUser.firstName}}</h4></a></li>
+                <li ng-show="currentXploreUser"><a href="#/user/edit"><h4>Edit Profile</h4></a></li>
+                <li ng-show="currentXploreUser"><a ng-click="model.logout()"><h4>Logout</h4></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div id="searchResultPage" class="container">
+    <div class="thumbnail">
+        <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-3">
+                <img id="venueImage" ng-src="{{model.user.displayPicture}}" class="img-rounded">
+            </div>
+            <div id="profileDetails" class="col-xs-12 col-sm-8 col-sm-offset-1 col-md-8 col-md-offset-1">
+                <h2>{{model.user.firstName}} {{model.user.lastName}}</h2>
+                <p>
+                    <i class="fa fa-envelope"></i> {{model.user.email}} <br>
+                    <i class="fa fa-birthday-cake"></i> {{model.newDate}}
+                </p>
+                <div id="frendReq" ng-show="currentXploreUser">
+                    <div ng-show="model.isFriends">
+                        <a ng-click="model.unfriend()"><h4>Unfriend</h4></a>
+                    </div>
+                    <div ng-show="model.requestSent">
+                        <a ng-click="model.cancelRequest()"><h4>Cancel Friend Request</h4></a>
+                    </div>
+                    <div ng-show="model.notFriends">
+                        <a ng-click="model.addfriend()"><h4>Add Friend</h4></a>
+                    </div>
+                    <div ng-show="model.accptFrend">
+                        <a ng-click="model.requestAccept()"><h4>Accept Friend Request</h4></a>
+                    </div>
+                    <div ng-show="model.accptFrend">
+                        <a ng-click="model.requestDeny()"><h4>Reject Friend Request</h4></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="thumbnail" id="profileBodyThumbnail">
+        <div id="tabs">
+            <ul class="nav nav-pills">
+                <li class="active"><a data-toggle="pill" data-target="#timeline">Timeline</a></li>
+                <li><a data-toggle="pill" data-target="#favorites">Favorites ({{model.user.favorites.length}})</a></li>
+                <li><a data-toggle="pill" data-target="#friendsList">Friends ({{model.frnds.length}})</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="timeline" class="tab-pane fade in active">
+                    <div ng-show="!currentXploreUser">
+                        <strong><h3>You need to login to view the posts </h3></strong>
+                    </div>
+                    <div ng-show="currentXploreUser">
+                        <div ng-show="model.isFriends" class="row">
+                            <form>
+                            <textarea type="text"
+                                      rows="3"
+                                      name="note"
+                                      id="note"
+                                      ng-model="noteValue"
+                                      placeholder="Post something on {{model.user.firstName}}'s wall"
+                                      required class="form-control">
+                            </textarea>
+                                <button id="postSubmit" ng-click="model.addNote(noteValue)" class="btn btn-primary">Post</button>
+                            </form>
+                        </div>
+                        <div ng-hide="model.nts.length == 0" id="usersCommentsHead" class="row">
+                            <strong><h3>{{model.user.firstName}}'s Wall</h3></strong>
+                        </div>
+                        <div ng-show="model.nts.length == 0" class="row">
+                            <strong><h3>No posts on {{model.user.firstName}}'s Wall yet</h3></strong>
+                        </div>
+                        <div id="commentsList" class="row" ng-repeat="note in model.nts | orderBy: '-createdOn'">
+                            <div class="col-xs-4 col-md-1">
+                                <image href="#/user/friend/{{note.writerDetails._id}}" id="commentImage"  ng-src="{{note.writerDetails.displayPicture}}"></image>
+                            </div>
+                            <div class="col-xs-7 col-md-11">
+                                <div id="postedBy" class="row">
+                                    <a href="#/user/friend/{{note.writerDetails._id}}">
+                                        <h4><strong>{{note.writerDetails.firstName}}</strong></h4>
+                                    </a>
+                                </div>
+                                <div class="row">
+                                    <div id="commentValueID" class="col-xs-7 col-md-9">
+                                        {{note.value}}
+                                    </div>
+                                    <div class="col-xs-1 col-md-1">
+                                        <button ng-show="model.xplrUsr && (note.writtenBy == model.xplrUsr._id)"
+                                                id="deleteButton"
+                                                ng-click="model.deleteNote(note)" class="btn btn-primary pull-right">Delete</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <h5>{{model.convertDate(note.createdOn)}}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="favorites" class="tab-pane fade">
+                    <div class="friendFavorite">
+                        <div class="row">
+                            <div class="favoritesCount" ng-show="model.user.favorites.length === 0">
+                                <strong><h3>
+                                    {{model.user.firstName}} did not add any favorite location.
+                                </h3></strong>
+                            </div>
+                            <div class="favoritesCount" ng-show="model.user.favorites.length == 1">
+                                <strong><h3>
+                                    {{model.user.firstName}} has marked 1 location as his Favorite.
+                                </h3></strong>
+                            </div>
+                            <div class="favoritesCount" ng-show="model.user.favorites.length > 1">
+                                <strong><h3>
+                                    {{model.user.firstName}} has marked {{model.user.favorites.length}} locations as his Favorite.
+                                </h3></strong>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-4" ng-repeat = "item in model.user.favorites">
+                                <div class="thumbnail">
+                                    <div class="embed-responsive embed-responsive-4by3">
+                                        <a href="#/venue/{{item.venueId}}">
+                                            <image id="searchImage"  ng-src="{{item.venueImage}}"></image>
+                                        </a>
+                                    </div>
+                                    <div class="caption">
+                                        <a class="noDecoration" href="#/venue/{{item.venueId}}">
+                                            <h4>{{item.venueName | limitTo:33}}</h4>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="friendsList" class="tab-pane fade">
+                    <div ng-show="!currentXploreUser">
+                        <strong><h3>You need to login to check {{model.user.firstName}}'s friend list </h3></strong>
+                    </div>
+                    <div ng-show="currentXploreUser">
+                        <div id="frndsList">
+                            <div ng-show="model.frnds.length ==0">
+                                <h3>{{model.user.firstName}} has no friends in his list.</h3>
+                            </div>
+                            <div ng-show="model.frnds.length > 0">
+                                <h3>{{model.user.firstName}} has {{model.frnds.length}} friends in his list.</h3>
+                            </div>
+                            <div class="row" ng-repeat="item in model.frnds">
+                                <div class="col-xs-4 col-md-1">
+                                    <a href="#/user/friend/{{item._id}}">
+                                        <image id="commentImage"  ng-src="{{item.displayPicture}}"></image>
+                                    </a>
+                                </div>
+                                <div id="commentBlockId" class="col-xs-8 col-md-11">
+                                    <div id="commentedUser" class="row">
+                                        <a href="#/user/friend/{{item._id}}">
+                                            <h4><strong>{{item.firstName}} {{item.lastName}}</strong></h4>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
