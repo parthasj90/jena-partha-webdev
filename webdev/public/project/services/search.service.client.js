@@ -5,13 +5,12 @@
 
     function SearchService($http) {
         var url_prefix = "https://api.foursquare.com/v2/";
-        var clientID = process.env.FOURSQUARE_CLIENT_ID;
+       /* var clientID = process.env.FOURSQUARE_CLIENT_ID;
         var clientSecret = process.env.FOURSQUARE_CLIENT_SECRET;
-        var clientVersion = process.env.FOURSQUARE_VERSION;
-        /*
+        var clientVersion = process.env.FOURSQUARE_VERSION;*/
         var clientID = "JFSSW1NIHYS3R0JZU2XXJFHRY5DQR3AINCXVT10GWU4DN2SK";
         var clientSecret = "ZIIFPUCZ43MOQOPB41GGD1D02L1COCOYCKBLZ5VTSMICIBAA";
-        var clientVersion = "20160609";*/
+        var clientVersion = "20160609";
 
         var api = {
             getAllPlaces: getAllPlaces,
