@@ -8,6 +8,39 @@
         vm.deleteUser = deleteUser;
         vm.deleteVenue = deleteVenue;
         vm.adminLogin = adminLogin;
+        vm.register = register;
+        vm.updateUser = updateUser;
+        function updateUser(user) {
+            UserService
+                .updateUser(user._id, user)
+                .then(
+                    function (response) {
+                        vm.success = "Updated successfully";
+                        $route.reload();
+                    },
+                    function (error) {
+                        vm.error = "Unable to update user"
+                    }
+                );
+        }
+
+        function register(user) {
+                UserService
+                    .register(user)
+                    .then(
+                        function (response) {
+                            var user = response.data;
+                            if(user) {
+                                vm.success = "Registered successfully";
+                                $route.reload();
+                            }
+                        },
+                        function (err) {
+                            vm.error = err.data;
+                        }
+                    );
+
+        }
 
         function init() {
             UserService

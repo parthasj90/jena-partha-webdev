@@ -12,11 +12,11 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li ng-hide="currentXploreUser"><a href="#/login?venueId={{model.venueId}}"><h4>Login</h4></a></li>
-                <li ng-hide="currentXploreUser"><a href="#/register"> <h4>Register</h4></a></li>
-                <li ng-show="currentXploreUser"><a href="#/user"><h4>{{currentXploreUser.firstName}}</h4></a></li>
-                <li ng-show="currentXploreUser"><a href="#/user/edit"><h4>Edit Profile</h4></a></li>
-                <li ng-show="currentXploreUser"><a ng-click="model.logout()"><h4>Logout</h4></a></li>
+                <li ng-hide="currentUser"><a href="#/login?venueId={{model.venueId}}"><h4>Login</h4></a></li>
+                <li ng-hide="currentUser"><a href="#/register"> <h4>Register</h4></a></li>
+                <li ng-show="currentUser"><a href="#/user"><h4>{{currentUser.firstName}}</h4></a></li>
+                <li ng-show="currentUser"><a href="#/user/edit"><h4>Edit Profile</h4></a></li>
+                <li ng-show="currentUser"><a ng-click="model.logout()"><h4>Logout</h4></a></li>
             </ul>
         </div>
     </div>
@@ -33,7 +33,7 @@
                     <i class="fa fa-envelope"></i> {{model.user.email}} <br>
                     <i class="fa fa-birthday-cake"></i> {{model.newDate}}
                 </p>
-                <div id="frendReq" ng-show="currentXploreUser">
+                <div id="frendReq" ng-show="currentUser">
                     <div ng-show="model.isFriends">
                         <a ng-click="model.unfriend()"><h4>Unfriend</h4></a>
                     </div>
@@ -62,10 +62,10 @@
             </ul>
             <div class="tab-content">
                 <div id="timeline" class="tab-pane fade in active">
-                    <div ng-show="!currentXploreUser">
+                    <div ng-show="!currentUser">
                         <strong><h3>You need to login to view the posts </h3></strong>
                     </div>
-                    <div ng-show="currentXploreUser">
+                    <div ng-show="currentUser">
                         <div ng-show="model.isFriends" class="row">
                             <form>
                             <textarea type="text"
@@ -150,10 +150,10 @@
                     </div>
                 </div>
                 <div id="friendsList" class="tab-pane fade">
-                    <div ng-show="!currentXploreUser">
+                    <div ng-show="!currentUser">
                         <strong><h3>You need to login to check {{model.user.firstName}}'s friend list </h3></strong>
                     </div>
-                    <div ng-show="currentXploreUser">
+                    <div ng-show="currentUser">
                         <div id="frndsList">
                             <div ng-show="model.frnds.length ==0">
                                 <h3>{{model.user.firstName}} has no friends in his list.</h3>

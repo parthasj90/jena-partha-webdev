@@ -7,7 +7,7 @@
         var vm = this;
         vm.searchString = $routeParams.searchString;
         vm.searchLocation = $routeParams.searchLocation;
-        vm.user = $rootScope.currentXploreUser;
+        vm.user = $rootScope.currentUser;
 
         vm.unregister = unregisterUser;
         vm.logout = logout;
@@ -18,11 +18,11 @@
                 .then(
                     function(response) {
                         $location.url("/main");
-                        $rootScope.currentXploreUser = null
+                        $rootScope.currentUser = null
                     },
                     function() {
                         $location.url("/main");
-                        $rootScope.currentXploreUser = null
+                        $rootScope.currentUser = null
                     }
                 );
 
@@ -34,11 +34,11 @@
                 .then(
                     function(response){
                         $location.url("/main");
-                        $rootScope.currentXploreUser = null
+                        $rootScope.currentUser = null
                     },
                     function(error) {
                         vm.error = "Unable to remove user"
-                        $rootScope.currentXploreUser = null
+                        $rootScope.currentUser = null
                     }
                 );
         }

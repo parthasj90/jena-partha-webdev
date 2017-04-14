@@ -6,7 +6,7 @@
     function VenueController($location, SearchService, $route, $rootScope, VenueService, UserService, $routeParams) {
         var vm = this;
         vm.venueId = $routeParams.venueId;
-        vm.user = $rootScope.currentXploreUser;
+        vm.user = $rootScope.currentUser;
 
         vm.removeFavorite = removeFavorite;
         vm.addFavorite = addFavorite;
@@ -117,11 +117,11 @@
 
         function removeFavorite() {
             UserService
-                .removeFavorite($rootScope.currentXploreUser._id,vm.venueId)
+                .removeFavorite($rootScope.currentUser._id,vm.venueId)
                 .then(
                     function (response) {
                         return  VenueService
-                                    .removeFavoriteOf(vm.venueId, $rootScope.currentXploreUser._id);
+                                    .removeFavoriteOf(vm.venueId, $rootScope.currentUser._id);
                     },
                     function (error) {
                         vm.removeFavoriteStatus = false;
@@ -147,18 +147,18 @@
 
 
         function addFavorite() {
-            if($rootScope.currentXploreUser){
+            if($rootScope.currentUser){
                 var venue = {
                     venueId: vm.venueId,
                     venueImage: vm.imgURL,
                     venueName: vm.venueDetails.name,
                 };
                 UserService
-                    .addFavorite($rootScope.currentXploreUser._id,venue)
+                    .addFavorite($rootScope.currentUser._id,venue)
                     .then(
                         function (response) {
                             return  VenueService
-                                .addFavoriteOf(vm.venueId, $rootScope.currentXploreUser._id);
+                                .addFavoriteOf(vm.venueId, $rootScope.currentUser._id);
                         },
                         function (error) {
                             vm.addFavoriteStatus = false;
@@ -184,10 +184,10 @@
         }
 
         function addComment(commentValue) {
-            if($rootScope.currentXploreUser){
+            if($rootScope.currentUser){
                 var comment = {
                     value: commentValue,
-                    commentedBy: $rootScope.currentXploreUser._id,
+                    commentedBy: $rootScope.currentUser._id,
                     commentedOn: Date.now()
                 };
                 VenueService
@@ -236,11 +236,11 @@
                 .then(
                     function(response) {
                         $location.url("/main");
-                        $rootScope.currentXploreUser = null
+                        $rootScope.currentUser = null
                     },
                     function() {
                         $location.url("/main");
-                        $rootScope.currentXploreUser = null
+                        $rootScope.currentUser = null
                     }
                 );
 
@@ -252,11 +252,11 @@
                 .then(
                     function(response){
                         $location.url("/main");
-                        $rootScope.currentXploreUser = null;
+                        $rootScope.currentUser = null;
                     },
                     function(error) {
                         vm.error = "Unable to remove user";
-                        $rootScope.currentXploreUser = null
+                        $rootScope.currentUser = null
                     }
                 );
         }

@@ -5,7 +5,7 @@
 
     function ProfileController($route, $rootScope, UserService, $location) {
         var vm = this;
-        var id = $rootScope.currentXploreUser._id;
+        var id = $rootScope.currentUser._id;
 
         vm.addNote = addNote;
         vm.deleteNote =deleteNote;
@@ -137,7 +137,7 @@
                 .removeFromFriendRequest(id, friendId)
                 .then(
                     function (response) {
-                        XploreUserService
+                        UserService
                             .addFriend(id,friendId)
                             .then(
                                 function (response) {
@@ -161,7 +161,7 @@
                 .removeFromFriendRequest(id, friendId)
                 .then(
                     function (response) {
-                        XploreUserService
+                        UserService
                             .removeFriend(friendId, id)
                             .then(
                                 function (response) {
@@ -196,11 +196,11 @@
                 .then(
                     function(response) {
                         $location.url("/main");
-                        $rootScope.currentXploreUser = null
+                        $rootScope.currentUser = null
                     },
                     function() {
                         $location.url("/main");
-                        $rootScope.currentXploreUser = null
+                        $rootScope.currentUser = null
                     }
                 );
 
@@ -214,11 +214,11 @@
                     .then(
                         function(response){
                             $location.url("/main");
-                            $rootScope.currentXploreUser = null
+                            $rootScope.currentUser = null
                         },
                         function(error) {
                             vm.error = "Unable to remove user"
-                            $rootScope.currentXploreUser = null
+                            $rootScope.currentUser = null
                         }
                     );
             }

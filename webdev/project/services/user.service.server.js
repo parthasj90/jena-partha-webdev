@@ -323,19 +323,19 @@ module.exports = function (app, models) {
             )
     }
 
-/*
     var googleConfig = {
         clientID     : "957745628940-ml758ubvnaoeru6ber1m814m8csh9bjj.apps.googleusercontent.com",
         clientSecret : "hc00D_Oevr0fd4t0HBKnTsdr",
         callbackURL  : "http://localhost:3000/auth/google/callback"
     };
-*/
 
+/*
     var googleConfig = {
         clientID     : process.env.GOOGLE_CLIENT_ID,
         clientSecret : process.env.GOOGLE_CLIENT_SECRET,
         callbackURL  : process.env.GOOGLE_CALLBACK_URL
     };
+*/
 
     passport.use('google', new GoogleStrategy(googleConfig, googleStrategy));
 
@@ -369,19 +369,19 @@ module.exports = function (app, models) {
                 });
     }
 
-/*
     var facebookConfig = {
         clientID     : "156098021584108",
         clientSecret : "d73e040307bcee4ea559a64b790a94be",
         callbackURL  : "http://localhost:3000/auth/facebook/callback"
     };
-*/
 
+/*
     var facebookConfig = {
         clientID     : process.env.FACEBOOK_CLIENT_ID,
         clientSecret : process.env.FACEBOOK_CLIENT_SECRET,
         callbackURL  : process.env.FACEBOOK_CALLBACK_URL
     };
+*/
 
 
     passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));

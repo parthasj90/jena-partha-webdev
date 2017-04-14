@@ -12,11 +12,11 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li ng-hide="currentXploreUser"><a href="#/login"><h4>Login</h4></a></li>
-                <li ng-hide="currentXploreUser"><a href="#/register"> <h4>Register</h4></a></li>
-                <li ng-show="currentXploreUser"><a href="#/user"><h4>{{model.user.firstName}}</h4></a></li>
-                <li ng-show="currentXploreUser"><a href="#/user/edit"><h4>Edit Profile</h4></a></li>
-                <li ng-show="currentXploreUser"><a ng-click="model.logout()"><h4>Logout</h4></a></li>
+                <li ng-hide="currentUser"><a href="#/login"><h4>Login</h4></a></li>
+                <li ng-hide="currentUser"><a href="#/register"> <h4>Register</h4></a></li>
+                <li ng-show="currentUser"><a href="#/user"><h4>{{model.user.firstName}}</h4></a></li>
+                <li ng-show="currentUser"><a href="#/user/edit"><h4>Edit Profile</h4></a></li>
+                <li ng-show="currentUser"><a ng-click="model.logout()"><h4>Logout</h4></a></li>
             </ul>
         </div>
     </div>
@@ -56,8 +56,10 @@
 
     <div class="container-fluid" id="searchResult">
         <div ng-show= "model.setFlag">
+            <div class="thumbnail">
             <h3 id="resultTag">Found {{model.searchResultCount}} locations for
                 "{{model.searchString}}" in and around "{{model.searchLocation}}"  </h3>
+            </div>
         </div>
 
         <div class="col-xs-12 col-sm-6 col-md-4" ng-repeat = "item in model.out">

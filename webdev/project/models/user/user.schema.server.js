@@ -8,7 +8,6 @@ module.exports = function () {
         firstName: String,
         lastName: String,
         email: String,
-        gender: String,
         notes: [{
             value: String,
             writtenBy: {type: mongoose.Schema.ObjectId, ref: "ProjectUser"},
@@ -33,7 +32,6 @@ module.exports = function () {
             venueName: String
         }],
         photos:[String],
-        phone: String,
         friends: [{type: mongoose.Schema.ObjectId, ref: "ProjectUser"}],
         friendRequest: [{type: mongoose.Schema.ObjectId, ref: "ProjectUser"}],
         displayPicture: {type: String, default: "images/defaultDisplayPic.jpg"},

@@ -6,9 +6,9 @@
     function FriendProfileController($routeParams, $route, $rootScope, UserService, $location) {
         
         var vm = this;
-        var currUser= $rootScope.currentXploreUser;
+        var currUser= $rootScope.currentUser;
         var friendId = $routeParams.friendId;
-        vm.xplrUsr = $rootScope.currentXploreUser;
+        vm.xplrUsr = $rootScope.currentUser;
         vm.requestAccept = requestAccept;
         vm.requestDeny = requestDeny;
         vm.addfriend = addfriend;
@@ -75,7 +75,7 @@
                 .removeFromFriendRequest(currUser._id, friendId)
                 .then(
                     function (response) {
-                        XploreUserService
+                        UserService
                             .addFriend(currUser._id,friendId)
                             .then(
                                 function (response) {
@@ -98,7 +98,7 @@
                 .removeFromFriendRequest(currUser._id, friendId)
                 .then(
                     function (response) {
-                        XploreUserService
+                        UserService
                             .removeFriend(friendId, currUser._id)
                             .then(
                                 function (response) {
@@ -159,7 +159,7 @@
                 .addFriend(currUser._id,friendId)
                 .then(
                     function (response) {
-                        XploreUserService
+                        UserService
                             .addToFriendRequest(friendId,currUser._id)
                             .then(
                                 function (response) {
@@ -205,7 +205,7 @@
                 .removeFriend(friendId,currUser._id)
                 .then(
                     function (response) {
-                        XploreUserService
+                        UserService
                             .removeFriend(currUser._id,friendId)
                             .then(
                                 function (response) {
@@ -229,11 +229,11 @@
                 .then(
                     function(response) {
                         $location.url("/main");
-                        $rootScope.currentXploreUser = null
+                        $rootScope.currentUser = null
                     },
                     function() {
                         $location.url("/main");
-                        $rootScope.currentXploreUser = null
+                        $rootScope.currentUser = null
                     }
                 );
 
@@ -245,11 +245,11 @@
                 .then(
                     function(response){
                         $location.url("/main");
-                        $rootScope.currentXploreUser = null
+                        $rootScope.currentUser = null
                     },
                     function(error) {
                         vm.error = "Unable to remove user"
-                        $rootScope.currentXploreUser = null
+                        $rootScope.currentUser = null
                     }
                 );
         }

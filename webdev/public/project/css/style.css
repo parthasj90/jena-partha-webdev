@@ -294,7 +294,12 @@ body {
     font-size:11px;
 }
 
-
+#editAdminButton{
+    margin-top: 5px;
+    margin-right: -60px;
+    margin-left: -3px;
+    font-size:11px;
+}
 #adminVenueImage {
     height: 58px;
     width: 55px;

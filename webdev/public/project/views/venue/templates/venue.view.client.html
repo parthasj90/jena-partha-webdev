@@ -12,12 +12,12 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li ng-hide="currentXploreUser"><a href="#/login?venueId={{model.venueId}}"><h4>Login</h4></a></li>
-                <li ng-hide="currentXploreUser"><a href="#/register"> <h4>Register</h4></a></li>
-                <li ng-show="currentXploreUser"><a href="#/user"><h4>{{currentXploreUser.firstName}}</h4></a></li>
-                <li ng-show="currentXploreUser"><a href="#/user/edit"><h4>Edit Profile</h4></a></li>
-                <li ng-show="currentXploreUser"><a ng-click="model.logout()"><h4>Logout</h4></a></li>
-                <li ng-show="currentXploreUser"><a ng-click="model.unregister()"> <h4>Delete Account</h4></a></li>
+                <li ng-hide="currentUser"><a href="#/login?venueId={{model.venueId}}"><h4>Login</h4></a></li>
+                <li ng-hide="currentUser"><a href="#/register"> <h4>Register</h4></a></li>
+                <li ng-show="currentUser"><a href="#/user"><h4>{{currentUser.firstName}}</h4></a></li>
+                <li ng-show="currentUser"><a href="#/user/edit"><h4>Edit Profile</h4></a></li>
+                <li ng-show="currentUser"><a ng-click="model.logout()"><h4>Logout</h4></a></li>
+                <li ng-show="currentUser"><a ng-click="model.unregister()"> <h4>Delete Account</h4></a></li>
             </ul>
         </div>
     </div>
@@ -84,7 +84,7 @@
                                 <div id="commentValueID" class="col-xs-7 col-md-9">
                                     {{comment.value}}
                                 </div>
-                                <div ng-show="comment.commentedUser._id === currentXploreUser._id" class="col-xs-1 col-md-1">
+                                <div ng-show="comment.commentedUser._id === currentUser._id" class="col-xs-1 col-md-1">
                                     <button id="deleteButton" ng-click="model.deleteComment(comment)" class="btn btn-primary pull-right">Delete</button>
                                 </div>
                             </div>

@@ -6,12 +6,12 @@
     function Configuration($routeProvider) {
         $routeProvider
             .when("/main", {
-                templateUrl: "views/main/main.view.client.html",
+                templateUrl: "views/main/templates/main.view.client.html",
                 controller: "MainController",
                 controllerAs: "model"
             })
             .when("/admin", {
-                templateUrl: "views/admin/admin-login.view.client.html",
+                templateUrl: "views/admin/templates/admin-login.view.client.html",
                 controller: "AdminController",
                 controllerAs: "model"
             })
@@ -42,7 +42,7 @@
                 }
             })
             .when("/searchResult/:searchString/:searchLocation", {
-                templateUrl: "views/search/searchResult.view.client.html",
+                templateUrl: "views/search/templates/searchResult.view.client.html",
                 controller: "SearchResultController",
                 controllerAs: "model",
                 resolve :{
@@ -50,7 +50,7 @@
                 }
             })
             .when("/venue/:venueId", {
-                templateUrl: "views/venue/venue.view.client.html",
+                templateUrl: "views/venue/templates/venue.view.client.html",
                 controller: "VenueController",
                 controllerAs: "model",
                 resolve :{
@@ -66,7 +66,7 @@
                 }
             })
             .when("/admin/login", {
-                templateUrl: "views/admin/admin.view.client.html",
+                templateUrl: "views/admin/templates/admin.view.client.html",
                 controller: "AdminController",
                 controllerAs: "model"
             })
@@ -84,11 +84,11 @@
                     function (response) {
                         var user = response.data;
                         if(user == '0'){
-                            $rootScope.currentXploreUser = null;
+                            $rootScope.currentUser = null;
                             deferred.reject();
                             $location.url("/login");
                         } else {
-                            $rootScope.currentXploreUser = user;
+                            $rootScope.currentUser = user;
                             deferred.resolve();
                         }
                     },
@@ -108,9 +108,9 @@
                     function (response) {
                         var user = response.data;
                         if(user == '0'){
-                            $rootScope.currentXploreUser = null;
+                            $rootScope.currentUser = null;
                         } else {
-                            $rootScope.currentXploreUser = user;
+                            $rootScope.currentUser = user;
                         }
                     },
                     function (error) {
@@ -126,9 +126,9 @@
                     function (response) {
                         var user = response.data;
                         if(user == '0'){
-                            $rootScope.currentXploreUser = null;
+                            $rootScope.currentUser = null;
                         } else {
-                            $rootScope.currentXploreUser = user;
+                            $rootScope.currentUser = user;
                             if(user._id === $routeParams.friendId){
                                 $location.url("/user");
                             }
