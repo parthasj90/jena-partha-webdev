@@ -1,4 +1,4 @@
-(function() {
+(function () {
     angular
         .module("GoPlaces")
         .config(Configuration);
@@ -29,7 +29,7 @@
                 templateUrl: "views/user/templates/profile.view.client.html",
                 controller: "ProfileController",
                 controllerAs: "model",
-                resolve :{
+                resolve: {
                     loggedIn: checkLoggedIn
                 }
             })
@@ -37,7 +37,7 @@
                 templateUrl: "views/user/templates/profile-edit.view.client.html",
                 controller: "ProfileController",
                 controllerAs: "model",
-                resolve :{
+                resolve: {
                     loggedIn: checkLoggedIn
                 }
             })
@@ -45,7 +45,7 @@
                 templateUrl: "views/search/templates/searchResult.view.client.html",
                 controller: "SearchResultController",
                 controllerAs: "model",
-                resolve :{
+                resolve: {
                     loggedIn: checkLogged
                 }
             })
@@ -53,7 +53,7 @@
                 templateUrl: "views/venue/templates/venue.view.client.html",
                 controller: "VenueController",
                 controllerAs: "model",
-                resolve :{
+                resolve: {
                     loggedIn: checkLogged
                 }
             })
@@ -61,7 +61,7 @@
                 templateUrl: "views/user/templates/friend-profile.view.client.html",
                 controller: "FriendProfileController",
                 controllerAs: "model",
-                resolve :{
+                resolve: {
                     loggedIn: checkLoggedFriend
                 }
             })
@@ -75,7 +75,7 @@
             });
 
 
-        function checkLoggedIn($q, $location,$rootScope, UserService) {
+        function checkLoggedIn($q, $location, $rootScope, UserService) {
             var deferred = $q.defer();
 
             UserService
@@ -83,7 +83,7 @@
                 .then(
                     function (response) {
                         var user = response.data;
-                        if(user == '0'){
+                        if (user == '0') {
                             $rootScope.currentUser = null;
                             deferred.reject();
                             $location.url("/login");
@@ -100,14 +100,14 @@
             return deferred.promise;
         };
 
-        function checkLogged($q, $location,$rootScope, UserService) {
+        function checkLogged($q, $location, $rootScope, UserService) {
 
             UserService
                 .loggedIn()
                 .then(
                     function (response) {
                         var user = response.data;
-                        if(user == '0'){
+                        if (user == '0') {
                             $rootScope.currentUser = null;
                         } else {
                             $rootScope.currentUser = user;
@@ -116,20 +116,20 @@
                     function (error) {
                     }
                 );
-            
+
         };
 
-        function checkLoggedFriend($q, $location,$rootScope, $routeParams, UserService) {
+        function checkLoggedFriend($q, $location, $rootScope, $routeParams, UserService) {
             UserService
                 .loggedIn()
                 .then(
                     function (response) {
                         var user = response.data;
-                        if(user == '0'){
+                        if (user == '0') {
                             $rootScope.currentUser = null;
                         } else {
                             $rootScope.currentUser = user;
-                            if(user._id === $routeParams.friendId){
+                            if (user._id === $routeParams.friendId) {
                                 $location.url("/user");
                             }
                         }

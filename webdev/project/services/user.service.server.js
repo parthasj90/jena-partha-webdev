@@ -19,12 +19,12 @@ module.exports = function (app, models) {
     app.put("/api/project/addFavorite", addFavorite);
     app.put("/api/project/removeFavorite", removeFavorite);
     app.delete("/api/project/user/:userId", deleteUser);
-    app.get ('/auth/facebook', passport.authenticate('facebook', { scope : ['email'] }));
+    app.get('/auth/facebook', passport.authenticate('facebook', {scope: ['email']}));
     app.get("/auth/facebook/callback", passport.authenticate('facebook', {
         successRedirect: '/project/#/user',
         failureRedirect: '/project/#/login'
     }));
-    app.get("/auth/google", passport.authenticate('google', { scope: ['profile', 'email'] }));
+    app.get("/auth/google", passport.authenticate('google', {scope: ['profile', 'email']}));
     app.get("/auth/google/callback",
         passport.authenticate('google', {
             successRedirect: '/project/#/user',
@@ -37,8 +37,28 @@ module.exports = function (app, models) {
     app.put("/api/project/removeFromFriendRequest", removeFromFriendRequest);
     app.put("/api/project/addNote", addNote);
     app.put("/api/project/deleteNote", deleteNote);
-    app.get("/api/project/admin/users" , getAllUsers);
+    app.get("/api/project/admin/users", getAllUsers);
     app.put("/api/project/deleteImage/:userId", deleteImage);
+
+    var multer = require('multer');
+    var upload = multer({dest: __dirname + '/../../public/uploads'});
+    app.post("/api/project/uploads", upload.single('myImgFile'), uploadImage);
+    var googleConfig = {
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: process.env.GOOGLE_CALLBACK_URL
+    };
+
+    passport.use('google', new GoogleStrategy(googleConfig, googleStrategy));
+
+    var facebookConfig = {
+        clientID: process.env.FACEBOOK_CLIENT_ID,
+        clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+        callbackURL: process.env.FACEBOOK_CALLBACK_URL
+    };
+
+
+    passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
 
     function deleteImage(req, res) {
         var userId = req.params.userId;
@@ -55,25 +75,20 @@ module.exports = function (app, models) {
             );
     }
 
-    var multer = require('multer');
-    var upload = multer({ dest: __dirname+'/../../public/uploads' });
-
-    app.post("/api/project/uploads", upload.single('myImgFile'), uploadImage);
-
     function uploadImage(req, res) {
 
         var userId = req.body.userId;
 
-        var myFile        = req.file;
+        var myFile = req.file;
 
-        var originalname  = myFile.originalname; // file name on user's computer
-        var filename      = myFile.filename;     // new file name in upload folder
-        var path          = myFile.path;         // full path of uploaded file
-        var destination   = myFile.destination;  // folder where file is saved to
-        var size          = myFile.size;
-        var mimetype      = myFile.mimetype;
+        var originalname = myFile.originalname; // file name on user's computer
+        var filename = myFile.filename;     // new file name in upload folder
+        var path = myFile.path;         // full path of uploaded file
+        var destination = myFile.destination;  // folder where file is saved to
+        var size = myFile.size;
+        var mimetype = myFile.mimetype;
 
-        var url = "/uploads/"+filename;
+        var url = "/uploads/" + filename;
 
         userModelProject
             .uploadImage(userId, url)
@@ -88,7 +103,7 @@ module.exports = function (app, models) {
             );
     }
 
-    
+
     function getAllUsers(req, res) {
         userModelProject
             .getUsers()
@@ -101,9 +116,9 @@ module.exports = function (app, models) {
                 }
             );
     }
-    
+
     function addNote(req, res) {
-        var userId= req.body.userId;
+        var userId = req.body.userId;
         var note = req.body.note;
         userModelProject
             .addNote(userId, note)
@@ -118,7 +133,7 @@ module.exports = function (app, models) {
     }
 
     function deleteNote(req, res) {
-        var userId= req.body.userId;
+        var userId = req.body.userId;
         var note = req.body.note;
         userModelProject
             .deleteNote(userId, note)
@@ -192,9 +207,8 @@ module.exports = function (app, models) {
                 }
             );
     }
-    
-    
-    
+
+
     function addFavorite(req, res) {
         var userId = req.body.userId;
         var venue = req.body.venue;
@@ -234,14 +248,14 @@ module.exports = function (app, models) {
         userModelProject
             .findUserByUsername(username)
             .then(
-                function(user) {
-                    if(user && bcrypt.compareSync(password, user.password))  {
+                function (user) {
+                    if (user && bcrypt.compareSync(password, user.password)) {
                         done(null, user);
                     } else {
                         done(null, false);
                     }
                 },
-                function(err) {
+                function (err) {
                     if (err) {
                         done(err);
                     }
@@ -257,17 +271,17 @@ module.exports = function (app, models) {
         userModelProject
             .findUserById(user._id)
             .then(
-                function(user){
+                function (user) {
                     done(null, user);
                 },
-                function(err){
+                function (err) {
                     done(err, null);
                 }
             );
     }
 
     function loggedIn(req, res) {
-        if(req.isAuthenticated()){
+        if (req.isAuthenticated()) {
             res.json(req.user);
         } else {
             res.send('0');
@@ -291,8 +305,8 @@ module.exports = function (app, models) {
         userModelProject
             .findUserByUsername(username)
             .then(
-                function(user) {
-                    if(user) {
+                function (user) {
+                    if (user) {
                         res.status(400).send("Username already in use");
                         return;
                     } else {
@@ -301,15 +315,15 @@ module.exports = function (app, models) {
                             .createUser(req.body);
                     }
                 },
-                function(err) {
+                function (err) {
                     res.status(400).send(err);
                 }
             )
             .then(
-                function(user) {
-                    if(user) {
-                        req.login(user, function(err) {
-                            if(err) {
+                function (user) {
+                    if (user) {
+                        req.login(user, function (err) {
+                            if (err) {
                                 res.status(400).send(err);
                             } else {
                                 res.json(user);
@@ -317,74 +331,43 @@ module.exports = function (app, models) {
                         })
                     }
                 },
-                function(err) {
+                function (err) {
                     res.status(400).send(err);
                 }
             )
     }
-
-    var googleConfig = {
-        clientID     : "957745628940-ml758ubvnaoeru6ber1m814m8csh9bjj.apps.googleusercontent.com",
-        clientSecret : "hc00D_Oevr0fd4t0HBKnTsdr",
-        callbackURL  : "http://localhost:3000/auth/google/callback"
-    };
-
-/*
-    var googleConfig = {
-        clientID     : process.env.GOOGLE_CLIENT_ID,
-        clientSecret : process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL  : process.env.GOOGLE_CALLBACK_URL
-    };
-*/
-
-    passport.use('google', new GoogleStrategy(googleConfig, googleStrategy));
 
 
     function googleStrategy(token, refreshToken, profile, done) {
         userModelProject
             .findUserByGoogleId(profile.id)
             .then(
-                function(googleUser) {
-                    if(googleUser) {
-                        done(null,googleUser);
-                    } else{
+                function (googleUser) {
+                    if (googleUser) {
+                        done(null, googleUser);
+                    } else {
                         var email = profile.emails[0].value;
                         console.log(email);
                         var emailParts = email.split("@");
-                        googleUser={
-                            username:  emailParts[0],
+                        googleUser = {
+                            username: emailParts[0],
                             firstName: profile.name.givenName,
-                            lastName:  profile.name.familyName,
-                            email:     email,
+                            lastName: profile.name.familyName,
+                            email: email,
                             google: {
-                                id:    profile.id,
+                                id: profile.id,
                                 token: token
                             }
                         };
                         userModelProject.createUser(googleUser)
-                            .then(function(user){
-                                done(null,user);
+                            .then(function (user) {
+                                done(null, user);
                             })
                     }
                 });
     }
 
-    var facebookConfig = {
-        clientID     : "156098021584108",
-        clientSecret : "d73e040307bcee4ea559a64b790a94be",
-        callbackURL  : "http://localhost:3000/auth/facebook/callback"
-    };
 
-/*
-    var facebookConfig = {
-        clientID     : process.env.FACEBOOK_CLIENT_ID,
-        clientSecret : process.env.FACEBOOK_CLIENT_SECRET,
-        callbackURL  : process.env.FACEBOOK_CALLBACK_URL
-    };
-*/
-
-
-    passport.use(new FacebookStrategy(facebookConfig, facebookStrategy));
     function facebookStrategy(token, refreshToken, profile, done) {
 
         userModelProject
@@ -412,6 +395,7 @@ module.exports = function (app, models) {
                 return done(err, null);
             });
     }
+
     function deleteUser(req, res) {
         var userId = req.params.userId;
         userModelProject
@@ -472,9 +456,9 @@ module.exports = function (app, models) {
     function getUser(req, res) {
         var username = req.query['username'];
         var password = req.query['password'];
-        if(username && password) {
+        if (username && password) {
             findUserByCredentials(username, password, res);
-        } else if(username) {
+        } else if (username) {
             findUserByUsername(username, res);
         } else {
             res.send(null);
@@ -483,7 +467,7 @@ module.exports = function (app, models) {
 
     function findUserByCredentials(username, password, res) {
         userModelProject
-            .findUserByCredentials(username,password)
+            .findUserByCredentials(username, password)
             .then(
                 function (user) {
                     res.json(user);

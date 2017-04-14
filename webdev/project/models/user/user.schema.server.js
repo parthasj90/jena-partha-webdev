@@ -13,13 +13,13 @@ module.exports = function () {
             writtenBy: {type: mongoose.Schema.ObjectId, ref: "ProjectUser"},
             createdOn: {type: Date, default: Date.now()}
         }],
-        facebook:{
-            id:String,
-            token:String
+        facebook: {
+            id: String,
+            token: String
         },
-        google:{
-            id:String,
-            token:String
+        google: {
+            id: String,
+            token: String
         },
         favorites: [{
             venueId: {type: mongoose.Schema.ObjectId, ref: "Venue"},
@@ -31,7 +31,7 @@ module.exports = function () {
             venueImage: String,
             venueName: String
         }],
-        photos:[String],
+        photos: [String],
         friends: [{type: mongoose.Schema.ObjectId, ref: "ProjectUser"}],
         friendRequest: [{type: mongoose.Schema.ObjectId, ref: "ProjectUser"}],
         displayPicture: {type: String, default: "images/defaultDisplayPic.jpg"},

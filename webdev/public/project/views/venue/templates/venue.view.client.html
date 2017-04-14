@@ -13,11 +13,11 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li ng-hide="currentUser"><a href="#/login?venueId={{model.venueId}}"><h4>Login</h4></a></li>
-                <li ng-hide="currentUser"><a href="#/register"> <h4>Register</h4></a></li>
+                <li ng-hide="currentUser"><a href="#/register"><h4>Register</h4></a></li>
                 <li ng-show="currentUser"><a href="#/user"><h4>{{currentUser.firstName}}</h4></a></li>
                 <li ng-show="currentUser"><a href="#/user/edit"><h4>Edit Profile</h4></a></li>
                 <li ng-show="currentUser"><a ng-click="model.logout()"><h4>Logout</h4></a></li>
-                <li ng-show="currentUser"><a ng-click="model.unregister()"> <h4>Delete Account</h4></a></li>
+                <li ng-show="currentUser"><a ng-click="model.unregister()"><h4>Delete Account</h4></a></li>
             </ul>
         </div>
     </div>
@@ -27,15 +27,19 @@
     <div class="thumbnail">
         <div class="row">
             <div class="col-xs-12 col-md-3">
-                <image id="venueImage"  ng-src="{{model.imgURL}}" class="img-rounded"></image>
+                <image id="venueImage" ng-src="{{model.imgURL}}" class="img-rounded"></image>
             </div>
             <div class="col-xs-12 col-md-8 col-md-offset-1">
                 <h2>{{model.venueDetails.name}}</h2>
                 <h4>{{model.addrs}}</h4>
                 <h4>Phone No: {{model.phone}}</h4>
                 <h4>Rating: {{model.rating}}/10</h4>
-                <a style="text-decoration: none" ng-show="model.user && model.isNotFavorite" ng-click="model.addFavorite()"><h4>Add To My Favorite <i class="fa fa-heart-o" aria-hidden="true"></i></h4></a>
-                <a style="text-decoration: none" ng-show="model.user && model.isFavorite" ng-click="model.removeFavorite()"><h4>Remove From My Favorite <i class="fa fa-heart" aria-hidden="true"></i></h4></a>
+                <a style="text-decoration: none" ng-show="model.user && model.isNotFavorite"
+                   ng-click="model.addFavorite()"><h4>Add To My Favorite <i class="fa fa-heart-o"
+                                                                            aria-hidden="true"></i></h4></a>
+                <a style="text-decoration: none" ng-show="model.user && model.isFavorite"
+                   ng-click="model.removeFavorite()"><h4>Remove From My Favorite <i class="fa fa-heart"
+                                                                                    aria-hidden="true"></i></h4></a>
             </div>
         </div>
     </div>
@@ -72,7 +76,7 @@
                     <div id="commentsList" class="row" ng-repeat="comment in model.cmters | orderBy: '-commentedOn'">
                         <div class="col-xs-4 col-md-1">
                             <image href="#/user/friend/{{comment.commentedUser._id}}"
-                                   id="commentImage"  ng-src="{{comment.commentedUser.displayPicture}}"></image>
+                                   id="commentImage" ng-src="{{comment.commentedUser.displayPicture}}"></image>
                         </div>
                         <div id="commentBlockId" class="col-xs-8 col-md-11">
                             <div id="commentedUser" class="row">
@@ -85,7 +89,9 @@
                                     {{comment.value}}
                                 </div>
                                 <div ng-show="comment.commentedUser._id === currentUser._id" class="col-xs-1 col-md-1">
-                                    <button id="deleteButton" ng-click="model.deleteComment(comment)" class="btn btn-primary pull-right">Delete</button>
+                                    <button id="deleteButton" ng-click="model.deleteComment(comment)"
+                                            class="btn btn-primary pull-right">Delete
+                                    </button>
                                 </div>
                             </div>
                             <div class="row">
@@ -95,10 +101,10 @@
                     </div>
                 </div>
                 <div id="photos" class="tab-pane fade">
-                    <div id="photosList" class="col-xs-12 col-sm-6 col-md-4" ng-repeat = "img in model.photosURL">
+                    <div id="photosList" class="col-xs-12 col-sm-6 col-md-4" ng-repeat="img in model.photosURL">
                         <div class="thumbnail">
                             <div class="embed-responsive embed-responsive-4by3">
-                                <image id="searchImage"  ng-src="{{img}}"></image>
+                                <image id="searchImage" ng-src="{{img}}"></image>
                             </div>
                         </div>
                     </div>

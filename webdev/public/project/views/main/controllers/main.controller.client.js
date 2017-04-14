@@ -1,11 +1,11 @@
-(function() {
+(function () {
     angular
         .module("GoPlaces")
         .controller("MainController", MainController);
-    
-    function MainController($location,UserService, $rootScope) {
+
+    function MainController($location, UserService, $rootScope) {
         var vm = this;
-        
+
         vm.user = $rootScope.currentUser;
 
         vm.unregister = unregisterUser;
@@ -16,11 +16,11 @@
             UserService
                 .logout()
                 .then(
-                    function(response) {
+                    function (response) {
                         $location.url("/main");
                         $rootScope.currentUser = null
                     },
-                    function() {
+                    function () {
                         $location.url("/main");
                         $rootScope.currentUser = null
                     }
@@ -32,11 +32,11 @@
             UserService
                 .deleteUser(id)
                 .then(
-                    function(response){
+                    function (response) {
                         $location.url("/main");
                         $rootScope.currentUser = null
                     },
-                    function(error) {
+                    function (error) {
                         vm.error = "Unable to remove user"
                         $rootScope.currentUser = null
                     }
@@ -44,13 +44,13 @@
         }
 
         function search(place) {
-           if(place.type.trim === "" || place.location.trim === ""){
+            if (place.type.trim === "" || place.location.trim === "") {
                 vm.error = "Please enter a valid location and a search query"
             } else {
-                $location.url("/searchResult/"+place.type+"/"+place.location);
+                $location.url("/searchResult/" + place.type + "/" + place.location);
             }
         }
 
     }
-    
+
 })();

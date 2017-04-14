@@ -5,11 +5,11 @@
 
     function RegisterController($location, UserService) {
         var vm = this;
-        
+
         vm.register = register;
-        
+
         function register(user) {
-            if(user.password !== user.passwordConfirmation) {
+            if (user.password !== user.passwordConfirmation) {
                 vm.error = "Password did not match";
             } else {
                 UserService
@@ -17,7 +17,7 @@
                     .then(
                         function (response) {
                             var user = response.data;
-                            if(user) {
+                            if (user) {
                                 $location.url("/user");
                             }
                         },
@@ -27,6 +27,6 @@
                     );
             }
         }
-        
+
     }
 })();

@@ -8,8 +8,8 @@
         var id = $rootScope.currentUser._id;
 
         vm.addNote = addNote;
-        vm.deleteNote =deleteNote;
-        vm.deleteImage =deleteImage;
+        vm.deleteNote = deleteNote;
+        vm.deleteImage = deleteImage;
         vm.requestAccept = requestAccept;
         vm.requestDeny = requestDeny;
         vm.updateUser = updateUser;
@@ -23,21 +23,22 @@
                 .then(function (response) {
                     vm.user = response.data;
 
-                    vm.fRequests =[];
-                    for (var i in vm.user.friendRequest){
+                    vm.fRequests = [];
+                    for (var i in vm.user.friendRequest) {
                         fetchUserDetails(vm.user.friendRequest[i]);
                     }
                     vm.frnds = [];
-                    for (var i in vm.user.friends){
+                    for (var i in vm.user.friends) {
                         fetchFriendsDetails(vm.user.friends[i]);
                     }
-                    vm.nts= [];
-                    for(var i in vm.user.notes){
+                    vm.nts = [];
+                    for (var i in vm.user.notes) {
                         fetchNoteDetails(vm.user.notes[i]);
                     }
 
                 });
         }
+
         init();
 
         function deleteNote(note) {
@@ -55,8 +56,8 @@
         }
 
         function deleteImage() {
-            vm.imgDeleteError= null;
-            if(vm.user.displayPicture == "images/defaultDisplayPic.jpg"){
+            vm.imgDeleteError = null;
+            if (vm.user.displayPicture == "images/defaultDisplayPic.jpg") {
                 vm.imgDeleteError = "Cannot delete the default image";
             } else {
                 UserService
@@ -66,7 +67,7 @@
                             vm.deleteImagestatus = true;
                             $route.reload();
                         },
-                        function (error){
+                        function (error) {
                             vm.imgDeleteError = "Unable to delete the image";
                             $route.reload();
                         })
@@ -95,8 +96,8 @@
             UserService
                 .findUserById(note.writtenBy)
                 .then(
-                    function(response){
-                        note.writerDetails =response.data;
+                    function (response) {
+                        note.writerDetails = response.data;
                         vm.nts.push(note);
                     }
                 );
@@ -107,7 +108,7 @@
             UserService
                 .findUserById(usrId)
                 .then(
-                    function(response){
+                    function (response) {
                         vm.fRequests.push(response.data);
                         return response.data;
                     },
@@ -121,7 +122,7 @@
             UserService
                 .findUserById(usrId)
                 .then(
-                    function(response){
+                    function (response) {
                         vm.frnds.push(response.data);
                         return response.data;
                     },
@@ -138,7 +139,7 @@
                 .then(
                     function (response) {
                         UserService
-                            .addFriend(id,friendId)
+                            .addFriend(id, friendId)
                             .then(
                                 function (response) {
                                     $route.reload();
@@ -153,7 +154,6 @@
                     }
                 );
         }
-
 
 
         function requestDeny(friendId) {
@@ -179,26 +179,25 @@
         }
 
 
-        vm.searchPlaces = function (searchString,searchLocation) {
-            if(searchString == null || searchString.trim === "" || searchString == undefined
-                || searchLocation == null || searchLocation.trim === "" || searchLocation == undefined){
+        vm.searchPlaces = function (searchString, searchLocation) {
+            if (searchString == null || searchString.trim === "" || searchString == undefined
+                || searchLocation == null || searchLocation.trim === "" || searchLocation == undefined) {
                 vm.error = "Please enter a valid location and a search query"
             } else {
-                $location.url("/searchResult/"+searchString+"/"+searchLocation);
+                $location.url("/searchResult/" + searchString + "/" + searchLocation);
             }
         };
-
 
 
         function logout() {
             UserService
                 .logout()
                 .then(
-                    function(response) {
+                    function (response) {
                         $location.url("/main");
                         $rootScope.currentUser = null
                     },
-                    function() {
+                    function () {
                         $location.url("/main");
                         $rootScope.currentUser = null
                     }
@@ -208,15 +207,15 @@
 
         function unregisterUser() {
             var confirmation = confirm("Are you sure to delete your account ?");
-            if(confirmation){
+            if (confirmation) {
                 UserService
                     .deleteUser(id)
                     .then(
-                        function(response){
+                        function (response) {
                             $location.url("/main");
                             $rootScope.currentUser = null
                         },
-                        function(error) {
+                        function (error) {
                             vm.error = "Unable to remove user"
                             $rootScope.currentUser = null
                         }
@@ -237,7 +236,6 @@
                     }
                 );
         }
-
 
 
         function findFriend(friendName) {

@@ -19,11 +19,11 @@ module.exports = function () {
         getAllVenue: getAllVenue
     };
     return api;
-    
+
     function deleteVenue(venueId) {
-        return Venue.remove({"venueId" : venueId});
+        return Venue.remove({"venueId": venueId});
     }
-    
+
     function getAllVenue() {
         return Venue.find();
     }
@@ -31,7 +31,7 @@ module.exports = function () {
     function findVenueByVenueId(venueId) {
         return Venue.findOne({"venueId": venueId});
     }
-    
+
     function createVenue(venue) {
         return Venue.create(venue);
     }
@@ -39,7 +39,7 @@ module.exports = function () {
     function findVenueById(vId) {
         return Venue.findById(vId);
     }
-    
+
     function updateVenue(venueId, venue) {
         delete venue._id;
         return Venue
@@ -48,15 +48,15 @@ module.exports = function () {
                 {$set: venue}
             );
     }
-    
+
     function addComment(venueId, comment) {
         return Venue.update(
             {venueId: venueId},
             {$push: {comments: comment}}
         );
     }
-    
-    function deleteComment(venueId,comment) {
+
+    function deleteComment(venueId, comment) {
         return Venue.update(
             {venueId: venueId},
             {$pull: {comments: comment}}
@@ -74,18 +74,18 @@ module.exports = function () {
         return Venue.update(
             {venueId: venueId},
             {$pull: {favoriteOf: userId}}
-        );        
+        );
     }
-    
+
     function isFavoriteOf(venueId, userId) {
         return Venue.findOne({
             venueId: venueId,
             favoriteOf: {
-                $elemMatch : {
+                $elemMatch: {
                     $eq: userId
                 }
             }
         });
     }
-    
+
 };

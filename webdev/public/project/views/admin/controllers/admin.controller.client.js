@@ -1,4 +1,4 @@
-(function() {
+(function () {
     angular
         .module("GoPlaces")
         .controller("AdminController", AdminController);
@@ -25,20 +25,20 @@
         }
 
         function register(user) {
-                UserService
-                    .register(user)
-                    .then(
-                        function (response) {
-                            var user = response.data;
-                            if(user) {
-                                vm.success = "Registered successfully";
-                                $route.reload();
-                            }
-                        },
-                        function (err) {
-                            vm.error = err.data;
+            UserService
+                .register(user)
+                .then(
+                    function (response) {
+                        var user = response.data;
+                        if (user) {
+                            vm.success = "Registered successfully";
+                            $route.reload();
                         }
-                    );
+                    },
+                    function (err) {
+                        vm.error = err.data;
+                    }
+                );
 
         }
 
@@ -47,7 +47,7 @@
                 .getUsers()
                 .then(
                     function (response) {
-                        if(response.data){
+                        if (response.data) {
                             vm.users = response.data;
                         } else {
                             vm.users = [];
@@ -62,10 +62,10 @@
                 .getAllVenue()
                 .then(
                     function (response) {
-                        if(response.data){
+                        if (response.data) {
                             vm.ven = response.data;
-                            vm.venues =[];
-                            for(var i in vm.ven){
+                            vm.venues = [];
+                            for (var i in vm.ven) {
                                 getVenueDetails(vm.ven[i].venueId);
                             }
                         } else {
@@ -77,14 +77,14 @@
                     }
                 )
         }
-        
+
         init();
 
         function adminLogin(adminUsername, adminPassword) {
-            if(adminUsername === "admin" && adminPassword ==="admin"){
+            if (adminUsername === "admin" && adminPassword === "admin") {
                 $location.url("/admin/login");
             } else {
-                vm.error="Invalid Credentials";
+                vm.error = "Invalid Credentials";
             }
         }
 
@@ -92,18 +92,17 @@
             SearchService
                 .findPlaceById(venueId)
                 .then(
-                    function (response){
+                    function (response) {
                         var venueDetails = response.data.response.venue;
                         vm.venues.push(venueDetails);
-                    }           
+                    }
                 )
         }
 
 
-
         function deleteUser(user) {
             var confirmation = confirm("Are you sure to delete this user ?");
-            if(confirmation){
+            if (confirmation) {
                 UserService
                     .deleteUser(user._id)
                     .then(
@@ -119,10 +118,10 @@
             }
         }
 
-        
+
         function deleteVenue(venueId) {
             var confirmation = confirm("Are you sure to delete this venue ?");
-            if (confirmation){
+            if (confirmation) {
                 VenueService
                     .deleteVenue(venueId)
                     .then(

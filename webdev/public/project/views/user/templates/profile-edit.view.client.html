@@ -1,4 +1,3 @@
-
 <nav class="navbar navbar-fixed-top navbar-default">
     <div class="container">
         <div class="navbar-header">
@@ -13,9 +12,9 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#/user "> <h4>Home</h4></a></li>
-                <li><a ng-click="model.logout()"> <h4>Logout</h4></a></li>
-                <li><a ng-click="model.unregister()"> <h4>Delete Account</h4></a></li>
+                <li><a href="#/user "><h4>Home</h4></a></li>
+                <li><a ng-click="model.logout()"><h4>Logout</h4></a></li>
+                <li><a ng-click="model.unregister()"><h4>Delete Account</h4></a></li>
             </ul>
         </div>
     </div>
@@ -26,16 +25,18 @@
     <div class="row">
         <div class="col-xs-12 col-sm-3 col-md-3">
             <div class="thumbnail">
-            <img id="searchImage" ng-src="{{model.user.displayPicture}}"  class="img-rounded">
-            <form action="/api/project/uploads"  method="post" enctype="multipart/form-data">
-                <input  required name="myImgFile"   type="file" class="form-control" placeholder="Add a display picture"/>
-                <input  name="userId" value="{{model.user._id}}" style="display: none"/>
-                <button type="submit"   class="btn btn-block btn-primary">Upload & Save Image</button>
-            </form>
-            <button ng-click="model.deleteImage()" class="btn btn-block btn-danger">Delete Image</button>
-            <div ng-show= "model.imgDeleteError"
-                 class="errorAlert alert alert-danger"
-                 role="alert"><strong>Error !!</strong> {{model.imgDeleteError}}</div>
+                <img id="searchImage" ng-src="{{model.user.displayPicture}}" class="img-rounded">
+                <form action="/api/project/uploads" method="post" enctype="multipart/form-data">
+                    <input required name="myImgFile" type="file" class="form-control"
+                           placeholder="Add a display picture"/>
+                    <input name="userId" value="{{model.user._id}}" style="display: none"/>
+                    <button type="submit" class="btn btn-block btn-primary">Upload & Save Image</button>
+                </form>
+                <button ng-click="model.deleteImage()" class="btn btn-block btn-danger">Delete Image</button>
+                <div ng-show="model.imgDeleteError"
+                     class="errorAlert alert alert-danger"
+                     role="alert"><strong>Error !!</strong> {{model.imgDeleteError}}
+                </div>
             </div>
         </div>
         <div class="col-xs-12 col-sm-8 col-sm-offset-1 col-md-8 col-md-offset-1">
@@ -81,7 +82,8 @@
                 </div>
                 <button type="submit"
                         ng-click="model.updateUser()"
-                        class="btn btn-success pull-right">Save</button>
+                        class="btn btn-success pull-right">Save
+                </button>
             </form>
         </div>
     </div>

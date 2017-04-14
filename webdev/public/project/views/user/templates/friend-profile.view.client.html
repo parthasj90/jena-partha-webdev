@@ -13,7 +13,7 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li ng-hide="currentUser"><a href="#/login?venueId={{model.venueId}}"><h4>Login</h4></a></li>
-                <li ng-hide="currentUser"><a href="#/register"> <h4>Register</h4></a></li>
+                <li ng-hide="currentUser"><a href="#/register"><h4>Register</h4></a></li>
                 <li ng-show="currentUser"><a href="#/user"><h4>{{currentUser.firstName}}</h4></a></li>
                 <li ng-show="currentUser"><a href="#/user/edit"><h4>Edit Profile</h4></a></li>
                 <li ng-show="currentUser"><a ng-click="model.logout()"><h4>Logout</h4></a></li>
@@ -76,7 +76,9 @@
                                       placeholder="Post something on {{model.user.firstName}}'s wall"
                                       required class="form-control">
                             </textarea>
-                                <button id="postSubmit" ng-click="model.addNote(noteValue)" class="btn btn-primary">Post</button>
+                                <button id="postSubmit" ng-click="model.addNote(noteValue)" class="btn btn-primary">
+                                    Post
+                                </button>
                             </form>
                         </div>
                         <div ng-hide="model.nts.length == 0" id="usersCommentsHead" class="row">
@@ -87,7 +89,8 @@
                         </div>
                         <div id="commentsList" class="row" ng-repeat="note in model.nts | orderBy: '-createdOn'">
                             <div class="col-xs-4 col-md-1">
-                                <image href="#/user/friend/{{note.writerDetails._id}}" id="commentImage"  ng-src="{{note.writerDetails.displayPicture}}"></image>
+                                <image href="#/user/friend/{{note.writerDetails._id}}" id="commentImage"
+                                       ng-src="{{note.writerDetails.displayPicture}}"></image>
                             </div>
                             <div class="col-xs-7 col-md-11">
                                 <div id="postedBy" class="row">
@@ -102,7 +105,9 @@
                                     <div class="col-xs-1 col-md-1">
                                         <button ng-show="model.xplrUsr && (note.writtenBy == model.xplrUsr._id)"
                                                 id="deleteButton"
-                                                ng-click="model.deleteNote(note)" class="btn btn-primary pull-right">Delete</button>
+                                                ng-click="model.deleteNote(note)" class="btn btn-primary pull-right">
+                                            Delete
+                                        </button>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -127,16 +132,17 @@
                             </div>
                             <div class="favoritesCount" ng-show="model.user.favorites.length > 1">
                                 <strong><h3>
-                                    {{model.user.firstName}} has marked {{model.user.favorites.length}} locations as his Favorite.
+                                    {{model.user.firstName}} has marked {{model.user.favorites.length}} locations as his
+                                    Favorite.
                                 </h3></strong>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-12 col-sm-6 col-md-4" ng-repeat = "item in model.user.favorites">
+                            <div class="col-xs-12 col-sm-6 col-md-4" ng-repeat="item in model.user.favorites">
                                 <div class="thumbnail">
                                     <div class="embed-responsive embed-responsive-4by3">
                                         <a href="#/venue/{{item.venueId}}">
-                                            <image id="searchImage"  ng-src="{{item.venueImage}}"></image>
+                                            <image id="searchImage" ng-src="{{item.venueImage}}"></image>
                                         </a>
                                     </div>
                                     <div class="caption">
@@ -164,7 +170,7 @@
                             <div class="row" ng-repeat="item in model.frnds">
                                 <div class="col-xs-4 col-md-1">
                                     <a href="#/user/friend/{{item._id}}">
-                                        <image id="commentImage"  ng-src="{{item.displayPicture}}"></image>
+                                        <image id="commentImage" ng-src="{{item.displayPicture}}"></image>
                                     </a>
                                 </div>
                                 <div id="commentBlockId" class="col-xs-8 col-md-11">

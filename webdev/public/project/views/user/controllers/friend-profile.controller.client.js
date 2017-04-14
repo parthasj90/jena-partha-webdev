@@ -4,19 +4,19 @@
         .controller("FriendProfileController", FriendProfileController)
 
     function FriendProfileController($routeParams, $route, $rootScope, UserService, $location) {
-        
+
         var vm = this;
-        var currUser= $rootScope.currentUser;
+        var currUser = $rootScope.currentUser;
         var friendId = $routeParams.friendId;
         vm.xplrUsr = $rootScope.currentUser;
         vm.requestAccept = requestAccept;
         vm.requestDeny = requestDeny;
         vm.addfriend = addfriend;
         vm.cancelRequest = cancelRequest;
-        vm.unfriend =unfriend;
+        vm.unfriend = unfriend;
         vm.unregister = unregisterUser;
         vm.logout = logout;
-        vm.deleteNote =deleteNote;
+        vm.deleteNote = deleteNote;
         vm.addNote = addNote;
         vm.findFriend = findFriend;
 
@@ -25,25 +25,25 @@
                 .findUserById(friendId)
                 .then(function (response) {
                     vm.user = response.data;
-                    if(currUser){
+                    if (currUser) {
                         UserService
                             .findUserById(currUser._id)
                             .then(
                                 function (response) {
                                     var refreshedUser = response.data;
-                                    if(refreshedUser && (refreshedUser.friends.indexOf(vm.user._id) > -1) && (vm.user.friends.indexOf(currUser._id) > -1)){
+                                    if (refreshedUser && (refreshedUser.friends.indexOf(vm.user._id) > -1) && (vm.user.friends.indexOf(currUser._id) > -1)) {
                                         vm.isFriends = true;
                                     }
-                                    if(refreshedUser && (refreshedUser.friends.indexOf(vm.user._id) > -1) && (vm.user.friends.indexOf(currUser._id) === -1)){
+                                    if (refreshedUser && (refreshedUser.friends.indexOf(vm.user._id) > -1) && (vm.user.friends.indexOf(currUser._id) === -1)) {
                                         vm.requestSent = true;
                                     }
-                                    if(refreshedUser && (refreshedUser.friends.indexOf(vm.user._id) === -1) && (vm.user.friends.indexOf(currUser._id) === -1)){
+                                    if (refreshedUser && (refreshedUser.friends.indexOf(vm.user._id) === -1) && (vm.user.friends.indexOf(currUser._id) === -1)) {
                                         vm.notFriends = true;
                                     }
-                                    if(refreshedUser &&
+                                    if (refreshedUser &&
                                         (refreshedUser.friends.indexOf(vm.user._id) === -1) &&
                                         (vm.user.friends.indexOf(currUser._id) > -1) &&
-                                        (refreshedUser.friendRequest.indexOf(vm.user._id) > -1)){
+                                        (refreshedUser.friendRequest.indexOf(vm.user._id) > -1)) {
                                         vm.accptFrend = true;
                                     }
                                 }
@@ -54,20 +54,21 @@
                         vm.notFriends = false;
                         vm.accptFrend = false;
                     }
-                    vm.fRequests =[];
-                    for (var i in vm.user.friendRequest){
+                    vm.fRequests = [];
+                    for (var i in vm.user.friendRequest) {
                         fetchUserDetails(vm.user.friendRequest[i]);
                     }
                     vm.frnds = [];
-                    for (var i in vm.user.friends){
+                    for (var i in vm.user.friends) {
                         fetchFriendsDetails(vm.user.friends[i]);
                     }
-                    vm.nts= [];
-                    for(var i in vm.user.notes){
+                    vm.nts = [];
+                    for (var i in vm.user.notes) {
                         fetchNoteDetails(vm.user.notes[i]);
                     }
                 });
         }
+
         init();
 
         function requestAccept() {
@@ -76,7 +77,7 @@
                 .then(
                     function (response) {
                         UserService
-                            .addFriend(currUser._id,friendId)
+                            .addFriend(currUser._id, friendId)
                             .then(
                                 function (response) {
                                     $route.reload();
@@ -119,8 +120,8 @@
             UserService
                 .findUserById(note.writtenBy)
                 .then(
-                    function(response){
-                        note.writerDetails =response.data;
+                    function (response) {
+                        note.writerDetails = response.data;
                         vm.nts.push(note);
                     }
                 );
@@ -130,7 +131,7 @@
             UserService
                 .findUserById(usrId)
                 .then(
-                    function(response){
+                    function (response) {
                         vm.fRequests.push(response.data);
                         return response.data;
                     },
@@ -144,7 +145,7 @@
             UserService
                 .findUserById(usrId)
                 .then(
-                    function(response){
+                    function (response) {
                         vm.frnds.push(response.data);
                         return response.data;
                     },
@@ -156,11 +157,11 @@
 
         function addfriend() {
             UserService
-                .addFriend(currUser._id,friendId)
+                .addFriend(currUser._id, friendId)
                 .then(
                     function (response) {
                         UserService
-                            .addToFriendRequest(friendId,currUser._id)
+                            .addToFriendRequest(friendId, currUser._id)
                             .then(
                                 function (response) {
                                     $route.reload();
@@ -179,11 +180,11 @@
 
         function cancelRequest() {
             UserService
-                .removeFromFriendRequest(friendId,currUser._id)
+                .removeFromFriendRequest(friendId, currUser._id)
                 .then(
                     function (response) {
                         UserService
-                            .removeFriend(currUser._id,friendId)
+                            .removeFriend(currUser._id, friendId)
                             .then(
                                 function (response) {
                                     $route.reload();
@@ -202,11 +203,11 @@
 
         function unfriend() {
             UserService
-                .removeFriend(friendId,currUser._id)
+                .removeFriend(friendId, currUser._id)
                 .then(
                     function (response) {
                         UserService
-                            .removeFriend(currUser._id,friendId)
+                            .removeFriend(currUser._id, friendId)
                             .then(
                                 function (response) {
                                     $route.reload();
@@ -227,11 +228,11 @@
             UserService
                 .logout()
                 .then(
-                    function(response) {
+                    function (response) {
                         $location.url("/main");
                         $rootScope.currentUser = null
                     },
-                    function() {
+                    function () {
                         $location.url("/main");
                         $rootScope.currentUser = null
                     }
@@ -243,11 +244,11 @@
             UserService
                 .deleteUser(id)
                 .then(
-                    function(response){
+                    function (response) {
                         $location.url("/main");
                         $rootScope.currentUser = null
                     },
-                    function(error) {
+                    function (error) {
                         vm.error = "Unable to remove user"
                         $rootScope.currentUser = null
                     }
@@ -294,7 +295,7 @@
                 .then(
                     function (response) {
                         vm.friendSearch = response.data;
-                    }, 
+                    },
                     function (error) {
                         vm.friendSearch = null;
                     }

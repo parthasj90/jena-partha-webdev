@@ -27,7 +27,7 @@ module.exports = function (app, models) {
             )
     }
 
-    function deleteVenue(req,res) {
+    function deleteVenue(req, res) {
         var venueId = req.params.venueId;
         venueModelProject
             .deleteVenue(venueId)
@@ -42,10 +42,10 @@ module.exports = function (app, models) {
     }
 
     function isFavoriteOf(req, res) {
-        var venueId =req.params.venueId;
+        var venueId = req.params.venueId;
         var userId = req.params.userId;
         venueModelProject
-            .isFavoriteOf(venueId,userId)
+            .isFavoriteOf(venueId, userId)
             .then(
                 function (venue) {
                     res.json(venue);
@@ -57,7 +57,7 @@ module.exports = function (app, models) {
     }
 
     function addFavoriteOf(req, res) {
-        var venueId =req.params.venueId;
+        var venueId = req.params.venueId;
         var userId = req.body.userId;
         var venue = {
             venueId: venueId,
@@ -67,9 +67,9 @@ module.exports = function (app, models) {
             .findVenueByVenueId(venueId)
             .then(
                 function (venueCheck) {
-                    if(venueCheck){
+                    if (venueCheck) {
                         venueModelProject
-                            .addFavoriteOf(venueId,userId)
+                            .addFavoriteOf(venueId, userId)
                             .then(
                                 function (stats) {
                                     res.send(stats);
@@ -97,10 +97,10 @@ module.exports = function (app, models) {
     }
 
     function removeFavoriteOf(req, res) {
-        var venueId =req.params.venueId;
+        var venueId = req.params.venueId;
         var userId = req.body.userId;
         venueModelProject
-            .removeFavoriteOf(venueId,userId)
+            .removeFavoriteOf(venueId, userId)
             .then(
                 function (stats) {
                     res.send(stats);
@@ -112,10 +112,10 @@ module.exports = function (app, models) {
     }
 
     function deleteComment(req, res) {
-        var venueId =req.params.venueId;
+        var venueId = req.params.venueId;
         var comment = req.body;
         venueModelProject
-            .deleteComment(venueId,comment)
+            .deleteComment(venueId, comment)
             .then(
                 function (stats) {
                     res.send(stats);
@@ -127,7 +127,7 @@ module.exports = function (app, models) {
     }
 
     function addComment(req, res) {
-        var venueId =req.params.venueId;
+        var venueId = req.params.venueId;
         var comment = req.body;
         var venue = {
             venueId: venueId,
@@ -137,9 +137,9 @@ module.exports = function (app, models) {
             .findVenueByVenueId(venueId)
             .then(
                 function (venueCheck) {
-                    if(venueCheck){
+                    if (venueCheck) {
                         venueModelProject
-                            .addComment(venueId,comment)
+                            .addComment(venueId, comment)
                             .then(
                                 function (stats) {
                                     res.send(stats);
@@ -164,7 +164,7 @@ module.exports = function (app, models) {
             );
     }
 
-    function createVenue(req, res){
+    function createVenue(req, res) {
         var venue = req.body;
         venueModelProject
             .createVenue(venue)
@@ -194,13 +194,13 @@ module.exports = function (app, models) {
 
 
     function updateVenue(req, res) {
-        var venueId =req.params.venueId;
+        var venueId = req.params.venueId;
         var venue = req.body;
         venueModelProject
             .findVenueByVenueId(venueId)
             .then(
                 function (venueCheck) {
-                    if(venueCheck){
+                    if (venueCheck) {
                         venueModelProject
                             .updateVenue(venueId, venue)
                             .then(

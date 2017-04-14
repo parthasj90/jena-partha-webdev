@@ -1,18 +1,19 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-        <a href="#/main" id="logo" class="navbar-brand">GoPlaces</a>
+            <a href="#/main" id="logo" class="navbar-brand">GoPlaces</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right" >
+            <ul class="nav navbar-nav navbar-right">
                 <li ng-hide="currentUser"><a href="#/login"><h4>Login</h4></a></li>
-                <li ng-hide="currentUser"><a href="#/register"> <h4>Register</h4></a></li>
+                <li ng-hide="currentUser"><a href="#/register"><h4>Register</h4></a></li>
                 <li ng-show="currentUser"><a href="#/user"><h4>{{model.user.firstName}}</h4></a></li>
                 <li ng-show="currentUser"><a href="#/user/edit"><h4>Edit Profile</h4></a></li>
                 <li ng-show="currentUser"><a ng-click="model.logout()"><h4>Logout</h4></a></li>
@@ -34,18 +35,19 @@
                             <input class="form-control"
                                    type="text"
                                    placeholder="Type of place" required
-                                   ng-model="place.type" />
+                                   ng-model="place.type"/>
                         </div>
                         <div class="col-md-4">
                             <input class="form-control"
                                    type="text"
                                    placeholder="City/Zipcode" required
-                                   ng-model="place.location" />
+                                   ng-model="place.location"/>
                         </div>
                         <div class="col-md-4">
                             <button type="submit"
                                     ng-click="model.search(place)"
-                                    class="btn btn-block btn-primary">Search</button>
+                                    class="btn btn-block btn-primary">Search
+                            </button>
                         </div>
                     </div>
                     <div class="col-md-2"></div>

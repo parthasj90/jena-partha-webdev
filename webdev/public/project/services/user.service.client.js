@@ -1,4 +1,4 @@
-(function() {
+(function () {
     angular
         .module("GoPlaces")
         .factory("UserService", UserService);
@@ -28,17 +28,17 @@
         };
 
         return api;
-        
+
         function deleteImage(userId) {
-            return $http.put("/api/project/deleteImage/"+userId);
+            return $http.put("/api/project/deleteImage/" + userId);
         }
-        
+
         function getUsers() {
             return $http.get('/api/project/admin/users');
         }
-        
+
         function addNote(userId, note) {
-            var body ={
+            var body = {
                 userId: userId,
                 note: note
             };
@@ -46,13 +46,13 @@
         }
 
         function deleteNote(userId, note) {
-            var body ={
+            var body = {
                 userId: userId,
                 note: note
             };
             return $http.put("/api/project/deleteNote", body);
         }
-        
+
         function addToFriendRequest(userId, friendId) {
             var body = {
                 userId: userId,
@@ -85,22 +85,22 @@
             return $http.put("/api/project/removeFriend", body);
         }
 
-        function addFavorite(userId,venue) {
+        function addFavorite(userId, venue) {
             var body = {
                 userId: userId,
                 venue: venue
             };
             return $http.put("/api/project/addFavorite", body);
         }
-        
-        function removeFavorite(userId,venueId) {
+
+        function removeFavorite(userId, venueId) {
             var body = {
                 userId: userId,
                 venueId: venueId
             };
             return $http.put("/api/project/removeFavorite", body);
         }
-        
+
         function register(user) {
             return $http.post("/api/project/register", user);
         }
@@ -112,32 +112,32 @@
         function logout(user) {
             return $http.post("/api/project/logout");
         }
-        
-        function login(username,password) {
+
+        function login(username, password) {
             var user = {
                 username: username,
                 password: password
             };
             return $http.post("/api/project/login", user);
         }
-        
+
 
         function deleteUser(userId) {
-            var url = "/api/project/user/"+ userId;
+            var url = "/api/project/user/" + userId;
             return $http.delete(url);
         }
 
-        function updateUser(userId,newUser) {
+        function updateUser(userId, newUser) {
             var url = "/api/project/user/" + userId;
             return $http.put(url, newUser);
         }
 
-        function createUser(newUser){
-            return $http.post("/api/project/user",newUser);
+        function createUser(newUser) {
+            return $http.post("/api/project/user", newUser);
         }
 
-        function findUserByUsername(username){
-            var url = "/api/project/user?username="+username;
+        function findUserByUsername(username) {
+            var url = "/api/project/user?username=" + username;
             return $http.get(url);
         }
 
@@ -147,7 +147,7 @@
         }
 
         function findUserByCredentials(username, password) {
-            var url = "/api/project/user?username="+username+"&password="+password;
+            var url = "/api/project/user?username=" + username + "&password=" + password;
             return $http.get(url);
         }
 

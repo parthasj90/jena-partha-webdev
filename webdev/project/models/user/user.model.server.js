@@ -28,14 +28,16 @@ module.exports = function () {
         uploadImage: uploadImage
     };
     return api;
-    
+
     function uploadImage(userId, url) {
         return ProjectUser
             .update(
                 {_id: userId},
-                {$set: {
-                    displayPicture: url
-                }}
+                {
+                    $set: {
+                        displayPicture: url
+                    }
+                }
             );
     }
 
@@ -49,7 +51,7 @@ module.exports = function () {
             {$push: {notes: note}}
         );
     }
-    
+
     function deleteNote(userId, note) {
         return ProjectUser.update(
             {_id: userId},
@@ -84,33 +86,33 @@ module.exports = function () {
             {_id: userId},
             {$pull: {friends: friendId}}
         );
-    }    
+    }
 
     function addToBucketList(userId, venue) {
         return ProjectUser.update(
             {_id: userId},
-            {$push : {bucketList: venue}}
+            {$push: {bucketList: venue}}
         );
     }
 
     function removeFromBucketList(userId, venue) {
         return ProjectUser.update(
             {_id: userId},
-            {$pull : {bucketList: venue}}
+            {$pull: {bucketList: venue}}
         );
     }
-    
+
     function addToFavorites(userId, venue) {
         return ProjectUser.update(
             {_id: userId},
-            {$push : {favorites: venue}}
+            {$push: {favorites: venue}}
         );
     }
-    
+
     function removeFromFavorites(userId, venueId) {
         return ProjectUser.update(
             {_id: userId},
-            {$pull : {favorites: {venueId: venueId}}}
+            {$pull: {favorites: {venueId: venueId}}}
         );
     }
 
@@ -121,7 +123,7 @@ module.exports = function () {
     function findUserByFacebookId(facebookId) {
         return ProjectUser.findOne({"facebook.id": facebookId});
     }
-    
+
     function createUser(user) {
         return ProjectUser.create(user);
     }
@@ -131,13 +133,13 @@ module.exports = function () {
     }
 
     function findUserByUsername(username) {
-        return ProjectUser.findOne({username: username });
+        return ProjectUser.findOne({username: username});
     }
-    
+
     function findUserByCredentials(username, password) {
         return ProjectUser.findOne({username: username, password: password});
     }
-    
+
     function updateUser(userId, user) {
         delete user._id;
         return ProjectUser
@@ -150,5 +152,5 @@ module.exports = function () {
     function deleteUser(userId) {
         return ProjectUser.remove({_id: userId});
     }
-    
+
 };

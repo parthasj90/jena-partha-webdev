@@ -1,8 +1,8 @@
-(function() {
+(function () {
     angular
         .module("GoPlaces")
         .controller("SearchResultController", SearchResultController);
-    
+
     function SearchResultController($location, SearchService, $rootScope, UserService, $routeParams) {
         var vm = this;
         vm.searchString = $routeParams.searchString;
@@ -16,11 +16,11 @@
             UserService
                 .logout()
                 .then(
-                    function(response) {
+                    function (response) {
                         $location.url("/main");
                         $rootScope.currentUser = null
                     },
-                    function() {
+                    function () {
                         $location.url("/main");
                         $rootScope.currentUser = null
                     }
@@ -32,11 +32,11 @@
             UserService
                 .deleteUser(id)
                 .then(
-                    function(response){
+                    function (response) {
                         $location.url("/main");
                         $rootScope.currentUser = null
                     },
-                    function(error) {
+                    function (error) {
                         vm.error = "Unable to remove user"
                         $rootScope.currentUser = null
                     }
@@ -45,41 +45,41 @@
 
 
         function init() {
-            searchPlaces(vm.searchString,vm.searchLocation);
+            searchPlaces(vm.searchString, vm.searchLocation);
         }
-        
+
         init();
 
         vm.navigateVenue = function (venueId) {
-            $location.url("/venue/"+venueId);
+            $location.url("/venue/" + venueId);
         }
 
-        vm.searchPlaces = function (searchString,searchLocation) {
-            if(searchString == null || searchString.trim === "" || searchString == undefined
-                || searchLocation == null || searchLocation.trim === "" || searchLocation == undefined){
+        vm.searchPlaces = function (searchString, searchLocation) {
+            if (searchString == null || searchString.trim === "" || searchString == undefined
+                || searchLocation == null || searchLocation.trim === "" || searchLocation == undefined) {
                 vm.error = "Please enter a valid location and a search query"
             } else {
-                $location.url("/searchResult/"+searchString+"/"+searchLocation);
+                $location.url("/searchResult/" + searchString + "/" + searchLocation);
             }
         };
-        
-        function searchPlaces(searchString,searchLocation) {
-            if(searchString == null || searchString == undefined
-                || searchLocation == null || searchLocation == undefined){
+
+        function searchPlaces(searchString, searchLocation) {
+            if (searchString == null || searchString == undefined
+                || searchLocation == null || searchLocation == undefined) {
                 vm.error = "Please enter a valid location and a search query"
             } else {
                 SearchService
-                    .getAllPlaces(searchString,searchLocation)
+                    .getAllPlaces(searchString, searchLocation)
                     .then(
                         function (response) {
-                            var groups= response.data.response.groups;
+                            var groups = response.data.response.groups;
                             vm.out = fetchItems(groups);
                             vm.searchResultCount = vm.out.length;
                             vm.searchString = searchString;
                             vm.searchLocation = searchLocation;
                         },
-                        function (error){
-                            vm.out= [];
+                        function (error) {
+                            vm.out = [];
                             vm.searchResultCount = vm.out.length;
                             vm.searchString = searchString;
                             vm.searchLocation = searchLocation;
@@ -93,22 +93,22 @@
             }
         }
 
-        function fetchItems(groups){
+        function fetchItems(groups) {
             var resultSet = [];
-            for (var i in groups){
+            for (var i in groups) {
                 var groupItems = groups[i].items;
-                for(var j in groupItems){
+                for (var j in groupItems) {
                     var addrs = "";
                     var addressArray = groupItems[j].venue.location.formattedAddress;
                     for (var a in addressArray) {
-                        addrs = addrs+addressArray[a]+" ";
+                        addrs = addrs + addressArray[a] + " ";
                     }
-                    if(groupItems[j].venue.featuredPhotos != undefined){
-                        var imageURL = groupItems[j].venue.featuredPhotos.items[0].prefix+"original"+groupItems[j].venue.featuredPhotos.items[0].suffix;
-                        imageURL = imageURL.replace(/\//gi,"/");
+                    if (groupItems[j].venue.featuredPhotos != undefined) {
+                        var imageURL = groupItems[j].venue.featuredPhotos.items[0].prefix + "original" + groupItems[j].venue.featuredPhotos.items[0].suffix;
+                        imageURL = imageURL.replace(/\//gi, "/");
                     } else var imageURL = "https://www.drphillipscenter.org/resources/images/default.jpg";
 
-                    if(groupItems[j].venue.rating != undefined){
+                    if (groupItems[j].venue.rating != undefined) {
                         var ratng = groupItems[j].venue.rating;
                     } else var ratng = 0;
 
@@ -127,5 +127,5 @@
         }
 
     }
-    
+
 })();

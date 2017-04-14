@@ -7,46 +7,48 @@
 .navbar-inverse {
     width: 100%;
 }
-.psj_div{
+
+.psj_div {
     background-image: url("../../assets/img/work.jpg");
     background-size: cover;
     background-repeat: no-repeat;
-    background-color:#ccc;
-    position:fixed;
-    width:100%;
-    height:100%;
-    top:0px;
-    left:0px;
-    z-index:1000;
+    background-color: #ccc;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    z-index: 1000;
     display: flex;
-    justify-content:center;
-    align-content:center;
-    flex-direction:column;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
 }
-.jumbotron{
-     color: lightcyan;
- }
+
+.jumbotron {
+    color: lightcyan;
+}
+
 form {
     margin-top: 20px;
     margin-bottom: 5px;
 }
+
 .form-control {
     margin-bottom: 5px;
 }
+
 body {
     padding-top: 60px;
     padding-bottom: 60px;
 }
-
-
-
 
 #searchImage {
     height: 270px;
     width: 100%;
 }
 
-#editProfilePage{
+#editProfilePage {
     margin-top: 71px;
     padding-left: 21px;
     padding-right: 23px;
@@ -58,12 +60,12 @@ body {
     padding-bottom: 20px;
 }
 
-.noDecoration{
+.noDecoration {
     text-decoration: none;
     color: black;
 }
 
-#resultTag{
+#resultTag {
     padding-bottom: 10px;
     padding-left: 16px;
 }
@@ -72,7 +74,7 @@ body {
     padding-top: 15px;
 }
 
-#photosList{
+#photosList {
     padding-top: 10px;
 }
 
@@ -80,7 +82,7 @@ body {
     padding-top: 120px;
 }
 
-.loginPageBody.thumbnail{
+.loginPageBody.thumbnail {
     padding-right: 15px;
     marging-top: 200px;
 }
@@ -104,75 +106,72 @@ body {
     cursor: pointer;
 }
 
-#commentImage{
-    margin-left:-4px;
+#commentImage {
+    margin-left: -4px;
     height: 58px;
     width: 55px;
 }
 
-.boxed{
+.boxed {
     border: 2px;
 }
 
 #tabs {
     padding-right: 24px;
-    padding-bottom:20px;
+    padding-bottom: 20px;
     padding-left: 25px;
 }
 
-
-
-#venueImage{
+#venueImage {
     padding: 10px;
     height: 270px;
     width: 100%;
 }
 
-#usersCommentsHead{
+#usersCommentsHead {
     padding-bottom: 20px;
 }
 
-#commentValue{
+#commentValue {
     width: 94%;
 }
 
-#venueBodyThumbnail{
+#venueBodyThumbnail {
     margin-bottom: 7px;
 }
 
-#loginPageContent{
+#loginPageContent {
     padding: 10px;
     padding-right: 20px;
 }
 
-
-#logForm{
+#logForm {
     padding-top: 10px;
 }
 
-#registerPanel{
-    padding-right:10px;
+#registerPanel {
+    padding-right: 10px;
 }
 
 #commentsList {
-    margin-bottom:8px;
+    margin-bottom: 8px;
     padding: 5px;
     color: firebrick;
     border-style: solid;
 
 }
 
-#commentedUser{
+#commentedUser {
     margin-top: -13px;
 }
 
-#deleteButton{
+#deleteButton {
     margin-top: -11px;
     margin-right: -60px;
-    font-size:11px;
+    font-size: 11px;
 }
 
-#commentValueID{
+#commentValueID {
     margin-left: 0px;
     margin-top: -4px;
     padding-right: 0px;
@@ -187,36 +186,35 @@ body {
     text-decoration: none;
 }
 
-#favorites{
+#favorites {
     padding-top: 27px;
     padding-bottom: 20px;
 }
 
-#friendsList{
+#friendsList {
     padding-top: 27px;
 }
 
-.favoritesCount{
+.favoritesCount {
     margin-left: 10px;
     margin-bottom: 20px;
 }
 
-#friendRequests{
+#friendRequests {
     margin-top: 30px;
     margin-left: 10px;
 }
 
-.requestButton{
+.requestButton {
     margin-top: -5px;
-    font-size:11px;
+    font-size: 11px;
 }
-
 
 .frendListId {
     margin-top: 3px;
 }
 
-.frendListName{
+.frendListName {
     margin-top: -13px;
 }
 
@@ -228,8 +226,8 @@ body {
     margin-bottom: 10px;
 }
 
-#postedBy{
-    margin-left:-18px;
+#postedBy {
+    margin-left: -18px;
     margin-top: -13px;
 }
 
@@ -243,7 +241,7 @@ body {
     margin-left: 11px;
 }
 
-#profileDetails{
+#profileDetails {
     margin-left: 8px;
 }
 
@@ -252,15 +250,15 @@ body {
     margin-right: 2px;
 }
 
-#profileDetails p{
+#profileDetails p {
     font-size: 15px;
 }
 
-#profileDetails h2{
+#profileDetails h2 {
     font-size: 30px;
 }
 
-.friendFavorite{
+.friendFavorite {
     margin-left: 12px;
     margin-top: -25px;
 }
@@ -283,23 +281,24 @@ body {
     margin-top: -8px;
 }
 
-#adminUserSection{
+#adminUserSection {
     padding: 10px;
 }
 
-#deleteAdminButton{
+#deleteAdminButton {
     margin-top: 5px;
     margin-right: -60px;
     margin-left: -3px;
-    font-size:11px;
+    font-size: 11px;
 }
 
-#editAdminButton{
+#editAdminButton {
     margin-top: 5px;
     margin-right: -60px;
     margin-left: -3px;
-    font-size:11px;
+    font-size: 11px;
 }
+
 #adminVenueImage {
     height: 58px;
     width: 55px;
@@ -318,15 +317,15 @@ body {
     margin-top: -8px;
 }
 
-#adminVenueSection{
+#adminVenueSection {
     padding: 10px;
 }
 
-#deleteVenueAdminButton{
+#deleteVenueAdminButton {
     margin-top: 5px;
     margin-right: -60px;
     margin-left: -3px;
-    font-size:11px;
+    font-size: 11px;
 }
 
 #frendReq a h4 {
@@ -334,7 +333,7 @@ body {
     font-size: 20px;
 }
 
-#frendReq a{
+#frendReq a {
     text-decoration: none;
 }
 
@@ -344,7 +343,7 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     opacity: 0.93;
-    filter:alpha(opacity=80);
+    filter: alpha(opacity=80);
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;

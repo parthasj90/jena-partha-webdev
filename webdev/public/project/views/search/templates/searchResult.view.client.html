@@ -13,7 +13,7 @@
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li ng-hide="currentUser"><a href="#/login"><h4>Login</h4></a></li>
-                <li ng-hide="currentUser"><a href="#/register"> <h4>Register</h4></a></li>
+                <li ng-hide="currentUser"><a href="#/register"><h4>Register</h4></a></li>
                 <li ng-show="currentUser"><a href="#/user"><h4>{{model.user.firstName}}</h4></a></li>
                 <li ng-show="currentUser"><a href="#/user/edit"><h4>Edit Profile</h4></a></li>
                 <li ng-show="currentUser"><a ng-click="model.logout()"><h4>Logout</h4></a></li>
@@ -42,12 +42,13 @@
                            name="searchLocation"
                            id="searchLocation"
                            type="text"
-                           required placeholder="in city or zip-code.." />
+                           required placeholder="in city or zip-code.."/>
                 </div>
                 <div class="col-md-4">
                     <button type="submit"
                             ng-click="model.searchPlaces(searchString,searchLocation)"
-                            class="btn btn-block btn-success">Search</button>
+                            class="btn btn-block btn-success">Search
+                    </button>
                 </div>
             </div>
             <div class="col-md-2"></div>
@@ -55,18 +56,18 @@
     </form>
 
     <div class="container-fluid" id="searchResult">
-        <div ng-show= "model.setFlag">
+        <div ng-show="model.setFlag">
             <div class="thumbnail">
-            <h3 id="resultTag">Found {{model.searchResultCount}} locations for
-                "{{model.searchString}}" in and around "{{model.searchLocation}}"  </h3>
+                <h3 id="resultTag">Found {{model.searchResultCount}} locations for
+                    "{{model.searchString}}" in and around "{{model.searchLocation}}" </h3>
             </div>
         </div>
 
-        <div class="col-xs-12 col-sm-6 col-md-4" ng-repeat = "item in model.out">
+        <div class="col-xs-12 col-sm-6 col-md-4" ng-repeat="item in model.out">
             <div class="thumbnail">
                 <div class="embed-responsive embed-responsive-4by3">
                     <a href="#/venue/{{item.venueId}}">
-                        <image id="searchImage"  ng-src="{{item.imageURL}}"></image>
+                        <image id="searchImage" ng-src="{{item.imageURL}}"></image>
                     </a>
                 </div>
                 <div class="caption">
